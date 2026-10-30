@@ -48,6 +48,13 @@ export default function App({ lang, shared, text, portrait }: PageData) {
 
       <main id="content" className="container main">
         <section className="hero" aria-labelledby="name">
+          <figure className="portrait">
+            {portrait ? (
+              <img src={portrait.large} srcSet={`${portrait.small} 360w, ${portrait.large} 720w`} sizes="(max-width: 700px) 160px, 300px" width={300} height={300} alt={ui.portraitAlt(shared.name)} />
+            ) : (
+              <Logo title={shared.name} className="portrait-logo" />
+            )}
+          </figure>
           <div className="hero-text">
             {shared.openToWork && text.status && <p className="status"><span aria-hidden="true" />{text.status}</p>}
             <h1 id="name">{firstName} <em>{lastName}</em><span className="cursor" aria-hidden="true">_</span></h1>
@@ -58,13 +65,6 @@ export default function App({ lang, shared, text, portrait }: PageData) {
               <a className="button outline" href="#games">{ui.playGames}</a>
             </div>
           </div>
-          <figure className="portrait">
-            {portrait ? (
-              <img src={portrait.large} srcSet={`${portrait.small} 360w, ${portrait.large} 720w`} sizes="(max-width: 700px) 160px, 300px" width={300} height={300} alt={ui.portraitAlt(shared.name)} />
-            ) : (
-              <Logo title={shared.name} className="portrait-logo" />
-            )}
-          </figure>
         </section>
 
         {text.now && text.now.length > 0 && (

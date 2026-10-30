@@ -5,6 +5,8 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "orjans-no",
   "compatibility_date": "2026-10-01",
+  // Required by `wrangler preview`, which builds a preview URL for each non-production branch.
+  "previews": {},
   // Static site only: serve the files that `npm run build` writes to dist/.
   "assets": {
     "directory": "./dist",
