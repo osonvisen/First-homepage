@@ -1,6 +1,7 @@
 {
   "navn": "Ørjan Sønvisen",
   "tittel": "Programvareutvikler",
+  "bilde": "media/Bilde CV Ø.png",
   "intro": "Her på orjans.no samler jeg spill og prosjekter jeg lager. Akkurat nå er det SQL-spill der man løser saker ved å skrive spørringer mot en database.",
   "lenker": [
     {
