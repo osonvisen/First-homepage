@@ -141,7 +141,7 @@
       "title": "Millionene som forsvant",
       "description": "Build the database yourself from raw data, and find out where 4.2 million kroner went.",
       "url": "/millionene/",
-      "status": "Prototype",
+      "status": "Klar",
       "skills": "CREATE TABLE · INSERT · normalisation · foreign keys"
     }
   ],
