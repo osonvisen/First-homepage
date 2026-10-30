@@ -141,7 +141,7 @@
       "title": "Millionene som forsvant",
       "description": "Bygg databasen selv fra rådata, og finn ut hvor 4,2 millioner kroner har blitt av.",
       "url": "/millionene/",
-      "status": "Prototype",
+      "status": "Klar",
       "skills": "CREATE TABLE · INSERT · normalisering · fremmednøkler"
     }
   ],
