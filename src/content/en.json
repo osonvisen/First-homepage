@@ -1,0 +1,77 @@
+{
+  "rolle": "Software Developer",
+  "rolleDetalj": "C#/.NET · backend first, full stack when needed",
+  "status": "Open to new opportunities",
+  "ingress": "I like understanding how systems fit together, why they are built the way they are, and what technical choices lead to. Over the past year I have shipped payment flows with Stripe, event sourcing with Marten and integrations with Tripletex and PowerOffice, in both monoliths and microservices.",
+  "serEtter": "I am looking for a role as a backend or full stack developer in a strong engineering team.",
+  "naa": [
+    { "etikett": "Project collaboration", "tittel": "IT Selskapet AS", "tekst": "Full stack developer on Binotool, a SaaS platform for automated quality testing. I built the checkout and subscription flow." },
+    { "etikett": "Teaching", "tittel": "Gokstad Akademiet", "tekst": "Student assistant with weekly live coding sessions where we build small projects together." },
+    { "etikett": "Side project", "tittel": "SQL games", "tekst": "Detective games where students learn SQL by solving cases against a database in the browser." }
+  ],
+  "prosjekter": [
+    {
+      "firma": "IT Selskapet AS", "merknad": "Binotool",
+      "tittel": "Checkout and subscriptions",
+      "punkter": [
+        "Pricing page, checkout with Norwegian VAT, receipts and per-organisation subscriptions",
+        "Stripe Checkout and webhooks with signature verification and idempotent event handling",
+        "Plan limits for Free, Pro and Enterprise, tested end to end in sandbox"
+      ],
+      "tagger": "Stripe, Webhooks, Rate limiting"
+    },
+    {
+      "firma": "Avilo AS", "merknad": "Launched 1 Oct 2026",
+      "tittel": "Rely CRM: Quotes and Absence",
+      "punkter": [
+        "Quotes with a public link where the customer can accept, reject or comment",
+        "Absence management built with event sourcing in Marten, with concurrency control and an access log",
+        "Integrations that send invoice data to Tripletex and PowerOffice"
+      ],
+      "tagger": "C#/.NET, Marten, Event sourcing"
+    },
+    {
+      "firma": "Avilo AS", "merknad": "Launched 1 Sep 2026",
+      "tittel": "Rely CMMS: Food safety and Cleaning",
+      "punkter": [
+        "Two services built from scratch, each with its own backend, frontend and mobile app",
+        "Got up to speed on an unfamiliar microservice architecture and reused existing services"
+      ],
+      "tagger": "Microservices, Mobile, Integrations"
+    },
+    {
+      "firma": "Avilo AS", "merknad": "Rydi",
+      "tittel": "Migration from Python to C#/.NET",
+      "punkter": [
+        "Typed domain models instead of dynamic structures",
+        "Asynchronous REST integrations with TomTom and Washd using HttpClient",
+        "Layered architecture with interfaces and DI for better testability"
+      ],
+      "tagger": "C#/.NET, REST, DI"
+    }
+  ],
+  "erfaring": [
+    { "periode": "Sep 2026 →", "sted": "IT Selskapet AS", "rolle": "Full stack developer, project collaboration", "pagaende": true },
+    { "periode": "Sep 2026 →", "sted": "Gokstad Akademiet", "rolle": "Student assistant and live coding", "pagaende": true },
+    { "periode": "Apr–Sep 2026", "sted": "Avilo AS", "rolle": "Software developer", "pagaende": false },
+    { "periode": "2024–2026", "sted": "Gokstad Akademiet", "rolle": "Higher vocational degree, backend programming", "pagaende": false },
+    { "periode": "2025", "sted": "Gokstad Akademiet", "rolle": "Student assistant and mentor in backend and cybersecurity", "pagaende": false },
+    { "periode": "2023–2025", "sted": "Gokstad Akademiet", "rolle": "Higher vocational degree, frontend development", "pagaende": false }
+  ],
+  "omMeg": "I am most at home in the backend: APIs, data flow, integrations and tests that describe how the system should actually behave. I am happy to take the frontend too, so I can deliver a feature all the way from database to screen.\n\nI started out with mathematics and computer science at the University of Oslo in 1992. Then the kitchen took over for many years, before I came back to code in 2023.",
+  "forKoden": "Certified chef, head chef at the Henie Onstad Art Centre, and owner and manager of Holmestrand Fjordhotell for almost seven years. Before that I was a team leader in a customer service centre.\n\nIt taught me to deliver under time pressure, lead people and run a business.",
+  "stack": [
+    { "gruppe": "Backend", "verktoy": "C#/.NET, REST API, MediatR, MassTransit, Node.js and TypeScript (Fastify)" },
+    { "gruppe": "Data", "verktoy": "PostgreSQL, MySQL, Marten, Firestore" },
+    { "gruppe": "Operations", "verktoy": "Docker, Kubernetes, AWS, Kafka/Redpanda, Keycloak" },
+    { "gruppe": "Testing", "verktoy": "xUnit, Testcontainers, GitHub Actions" },
+    { "gruppe": "Frontend", "verktoy": "React/TypeScript, React Native, Next.js, Tailwind" }
+  ],
+  "spillIngress": "For students and anyone curious about SQL (in Norwegian)",
+  "spill": [
+    { "tittel": "Mordet på Hotell Fjordglimt", "beskrivelse": "Solve a murder at a hotel in Horten by writing SQL against a database that runs right in the browser.", "lenke": "/fjordglimt/", "status": "Klar", "ferdigheter": "WHERE · JOIN · LIKE · GROUP BY · subqueries" },
+    { "tittel": "Millionene som forsvant", "beskrivelse": "Build the database yourself from raw data, and find out where 4.2 million kroner went.", "lenke": "/millionene/", "status": "Prototype", "ferdigheter": "CREATE TABLE · INSERT · normalisation · foreign keys" }
+  ],
+  "kontaktTittel": "Shall we talk?",
+  "kontaktTekst": "Send me a message on LinkedIn, or use email."
+}

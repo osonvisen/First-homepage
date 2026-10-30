@@ -1,0 +1,5 @@
+# Alle er velkomne, også AI-agenter som leter etter utviklere.
+User-agent: *
+Allow: /
+
+Sitemap: https://orjans.no/sitemap.xml

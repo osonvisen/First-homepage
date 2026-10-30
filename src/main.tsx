@@ -1,10 +1,15 @@
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import { hydrateRoot } from "react-dom/client";
 import App from "./App";
+import { sideData } from "./data";
+import "./fonts";
 import "./styles.css";
 
-createRoot(document.getElementById("root")!).render(
+// Siden er allerede ferdig tegnet som HTML ved bygging. Her «vekkes» den, så knappene virker.
+const lang = document.documentElement.lang === "en" ? "en" : "nb";
+hydrateRoot(
+  document.getElementById("root")!,
   <StrictMode>
-    <App />
+    <App {...sideData(lang)} />
   </StrictMode>
 );

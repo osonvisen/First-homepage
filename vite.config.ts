@@ -1,8 +1,8 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-// base: "./" gjør at siden virker både på github.io/First-homepage/ og på orjans.no
+// Siden ligger på roten av orjans.no, så alle stier er absolutte ("/").
 export default defineConfig({
   plugins: [react()],
-  base: "./",
+  base: "/",
 });

@@ -1,0 +1,12 @@
+{
+  "navn": "Ørjan Sønvisen",
+  "bilde": "media/ego_orjans.png",
+  "sted": "Holmestrand",
+  "apenForJobb": true,
+  "epostBruker": "osonvisen",
+  "epostDomene": "gmail.com",
+  "lenker": [
+    { "tekst": "LinkedIn", "url": "https://www.linkedin.com/in/osonvisen/" },
+    { "tekst": "GitHub", "url": "https://github.com/osonvisen" }
+  ]
+}

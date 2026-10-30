@@ -1,68 +1,94 @@
 # Oppsett for Pages CMS (https://pagescms.org)
-# Bestemmer hvilke felter du kan redigere når du logger inn.
+# «Felles» gjelder begge språk. «Norsk» og «English» har samme felter, med tekst på hvert sitt språk.
 media:
   input: public/media
   output: media
 
 content:
-  - name: forside
-    label: Forside
+  - name: felles
+    label: Felles (navn, bilde, kontakt)
     type: file
-    path: src/content/forside.json
+    path: src/content/felles.json
     format: json
     fields:
-      - name: navn
-        label: Navn
-        type: string
-        required: true
-      - name: tittel
-        label: Tittel
-        type: string
-        description: Vises under navnet, for eksempel «Utvikler og lærer».
-      - name: bilde
-        label: Bilde av deg
-        type: image
-        description: Valgfritt. Et kvadratisk bilde blir finest.
-      - name: intro
-        label: Om meg
-        type: text
-        description: En tom linje gir nytt avsnitt.
+      - { name: navn, label: Navn, type: string, required: true }
+      - { name: bilde, label: Bilde av deg, type: image, description: "Kvadratisk bilde blir finest. Siden lager mindre versjoner automatisk." }
+      - { name: sted, label: Sted, type: string }
+      - { name: apenForJobb, label: Vis «Åpen for nye muligheter», type: boolean }
+      - { name: epostBruker, label: "E-post: delen før @", type: string, description: "Settes sammen først når noen klikker «Vis e-post»." }
+      - { name: epostDomene, label: "E-post: delen etter @", type: string }
       - name: lenker
         label: Lenker
         type: object
         list: true
         fields:
-          - name: tekst
-            label: Tekst
-            type: string
-          - name: url
-            label: Adresse
-            type: string
-      - name: prosjekter
-        label: Spill og prosjekter
+          - { name: tekst, label: Tekst, type: string }
+          - { name: url, label: Adresse, type: string }
+
+  - name: norsk
+    label: Norsk tekst
+    type: file
+    path: src/content/nb.json
+    format: json
+    fields: &tekstfelter
+      - { name: rolle, label: Rolle, type: string, required: true }
+      - { name: rolleDetalj, label: Rolle – detalj, type: string }
+      - { name: status, label: Statustekst, type: string }
+      - { name: ingress, label: Ingress, type: text }
+      - { name: serEtter, label: Hva du ser etter, type: text }
+      - name: naa
+        label: Akkurat nå
         type: object
         list: true
         fields:
-          - name: tittel
-            label: Tittel
-            type: string
-            required: true
-          - name: beskrivelse
-            label: Beskrivelse
-            type: text
-          - name: lenke
-            label: Lenke
-            type: string
-            description: For spill på denne siden skriver du mappenavnet med skråstrek, for eksempel fjordglimt/
-          - name: status
-            label: Status
-            type: select
-            options:
-              values: [Klar, Prototype, Kommer snart]
-          - name: ferdigheter
-            label: Hva man øver på
-            type: string
-            description: Kort liste, for eksempel «JOIN, GROUP BY»
-          - name: bilde
-            label: Bilde
-            type: image
+          - { name: etikett, label: Etikett, type: string }
+          - { name: tittel, label: Tittel, type: string }
+          - { name: tekst, label: Tekst, type: text }
+      - name: prosjekter
+        label: Prosjekter
+        type: object
+        list: true
+        fields:
+          - { name: firma, label: Firma, type: string }
+          - { name: merknad, label: Merknad, type: string }
+          - { name: tittel, label: Tittel, type: string }
+          - { name: punkter, label: Punkter, type: string, list: true }
+          - { name: tagger, label: Tagger (kommaseparert), type: string }
+      - name: erfaring
+        label: Erfaring og utdanning
+        type: object
+        list: true
+        fields:
+          - { name: periode, label: Periode, type: string }
+          - { name: sted, label: Sted, type: string }
+          - { name: rolle, label: Rolle, type: string }
+          - { name: pagaende, label: Pågående, type: boolean }
+      - { name: omMeg, label: Om meg, type: text, description: "En tom linje gir nytt avsnitt." }
+      - { name: forKoden, label: Før koden, type: text }
+      - name: stack
+        label: Verktøykassa
+        type: object
+        list: true
+        fields:
+          - { name: gruppe, label: Gruppe, type: string }
+          - { name: verktoy, label: Verktøy, type: string }
+      - { name: spillIngress, label: Spill – undertekst, type: string }
+      - name: spill
+        label: Spill
+        type: object
+        list: true
+        fields:
+          - { name: tittel, label: Tittel, type: string }
+          - { name: beskrivelse, label: Beskrivelse, type: text }
+          - { name: lenke, label: Lenke, type: string, description: "For spill på siden: /mappenavn/, for eksempel /fjordglimt/" }
+          - { name: status, label: Status, type: select, options: { values: [Klar, Prototype, Kommer snart] } }
+          - { name: ferdigheter, label: Hva man øver på, type: string }
+      - { name: kontaktTittel, label: Kontakt – tittel, type: string }
+      - { name: kontaktTekst, label: Kontakt – tekst, type: text }
+
+  - name: english
+    label: English text
+    type: file
+    path: src/content/en.json
+    format: json
+    fields: *tekstfelter
