@@ -1,10 +1,12 @@
 {
-  "navn": "Ditt navn",
-  "tittel": "Skriv en kort tittel, for eksempel «Utvikler og lærer»",
-  "bilde": "",
-  "intro": "Skriv noen setninger om deg selv her. Hvem er du, og hva jobber du med?\n\nHer på orjans.no samler jeg spill og prosjekter jeg lager. Akkurat nå er det SQL-spill der man løser saker ved å skrive spørringer mot en database.",
+  "navn": "Ørjan Sønvisen",
+  "tittel": "Programvareutvikler",
+  "intro": "Her på orjans.no samler jeg spill og prosjekter jeg lager. Akkurat nå er det SQL-spill der man løser saker ved å skrive spørringer mot en database.",
   "lenker": [
-    { "tekst": "GitHub", "url": "https://github.com/" }
+    {
+      "tekst": "GitHub",
+      "url": "https://github.com/"
+    }
   ],
   "prosjekter": [
     {
@@ -12,16 +14,14 @@
       "beskrivelse": "Et detektivspill for å øve på SQL. Løs et mord på et hotell i Horten ved å skrive spørringer mot en database som kjører rett i nettleseren.",
       "lenke": "fjordglimt/",
       "status": "Klar",
-      "ferdigheter": "WHERE, JOIN, LIKE, GROUP BY, subqueries",
-      "bilde": ""
+      "ferdigheter": "WHERE, JOIN, LIKE, GROUP BY, subqueries"
     },
     {
       "tittel": "Millionene som forsvant",
       "beskrivelse": "Bygg databasen selv fra rådata, og finn ut hvor 4,2 millioner kroner har blitt av. Tabellene du lager, blir importert og brukt i etterforskningen.",
       "lenke": "millionene/",
       "status": "Prototype",
-      "ferdigheter": "CREATE TABLE, INSERT, normalisering, fremmednøkler",
-      "bilde": ""
+      "ferdigheter": "CREATE TABLE, INSERT, normalisering, fremmednøkler"
     }
   ]
 }
