@@ -1,0 +1,14 @@
+// Cloudflare configuration for test/preview deployments of this site.
+// Production (orjans.no) is still deployed with GitHub Pages; Cloudflare builds every branch
+// so changes can be tested on a separate URL before they are merged into main.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "orjans-no",
+  "compatibility_date": "2026-10-01",
+  // Static site only: serve the files that `npm run build` writes to dist/.
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none"
+  }
+}
