@@ -1,77 +1,150 @@
 {
-  "rolle": "Programvareutvikler",
-  "rolleDetalj": "C#/.NET · backend først, fullstack ved behov",
+  "role": "Programvareutvikler",
+  "roleDetail": "C#/.NET · backend først, fullstack ved behov",
   "status": "Åpen for nye muligheter",
-  "ingress": "Jeg liker å forstå hvordan systemer henger sammen, hvorfor de er bygget som de er, og hva tekniske valg får av konsekvenser. Siste året har jeg levert betalingsflyt med Stripe, event sourcing med Marten og integrasjoner mot Tripletex og PowerOffice, i både monolitter og mikrotjenester.",
-  "serEtter": "Jeg ser etter en rolle som backend- eller fullstackutvikler i et sterkt fagmiljø.",
-  "naa": [
-    { "etikett": "Prosjektsamarbeid", "tittel": "IT Selskapet AS", "tekst": "Fullstackutvikler på Binotool, en SaaS-plattform for automatisert kvalitetstesting. Jeg har bygget kjøpsflyt og abonnement." },
-    { "etikett": "Undervisning", "tittel": "Gokstad Akademiet", "tekst": "Studentassistent med ukentlig livekoding, der vi bygger små prosjekter sammen." },
-    { "etikett": "Sideprosjekt", "tittel": "SQL-spill", "tekst": "Detektivspill der studenter lærer SQL ved å løse saker mot en database i nettleseren." }
-  ],
-  "prosjekter": [
+  "intro": "Jeg liker å forstå hvordan systemer henger sammen, hvorfor de er bygget som de er, og hva tekniske valg får av konsekvenser. Siste året har jeg levert betalingsflyt med Stripe, event sourcing med Marten og integrasjoner mot Tripletex og PowerOffice, i både monolitter og mikrotjenester.",
+  "lookingFor": "Jeg ser etter en rolle som backend- eller fullstackutvikler i et sterkt fagmiljø.",
+  "now": [
     {
-      "firma": "IT Selskapet AS", "merknad": "Binotool",
-      "tittel": "Kjøpsflyt og abonnement",
-      "punkter": [
+      "label": "Prosjektsamarbeid",
+      "title": "IT Selskapet AS",
+      "text": "Fullstackutvikler på Binotool, en SaaS-plattform for automatisert kvalitetstesting. Jeg har bygget kjøpsflyt og abonnement."
+    },
+    {
+      "label": "Undervisning",
+      "title": "Gokstad Akademiet",
+      "text": "Studentassistent med ukentlig livekoding, der vi bygger små prosjekter sammen."
+    },
+    {
+      "label": "Sideprosjekt",
+      "title": "SQL-spill",
+      "text": "Detektivspill der studenter lærer SQL ved å løse saker mot en database i nettleseren."
+    }
+  ],
+  "projects": [
+    {
+      "company": "IT Selskapet AS",
+      "note": "Binotool",
+      "title": "Kjøpsflyt og abonnement",
+      "highlights": [
         "Prisside, checkout med norsk mva, kvittering og abonnement per organisasjon",
         "Stripe Checkout og webhooks med signaturverifisering og idempotent hendelseshåndtering",
         "Plangrenser for Free, Pro og Enterprise, testet ende til ende i sandbox"
       ],
-      "tagger": "Stripe, Webhooks, Rate limiting"
+      "tags": "Stripe, Webhooks, Rate limiting"
     },
     {
-      "firma": "Avilo AS", "merknad": "Lansert 1. okt. 2026",
-      "tittel": "Rely CRM: Tilbud og Fravær",
-      "punkter": [
+      "company": "Avilo AS",
+      "note": "Lansert 1. okt. 2026",
+      "title": "Rely CRM: Tilbud og Fravær",
+      "highlights": [
         "Tilbud med offentlig lenke der kunden godkjenner, avviser eller kommenterer",
         "Fravær bygget med event sourcing i Marten, med samtidighetskontroll og innsynslogg",
         "Integrasjoner som sender fakturagrunnlag til Tripletex og PowerOffice"
       ],
-      "tagger": "C#/.NET, Marten, Event sourcing"
+      "tags": "C#/.NET, Marten, Event sourcing"
     },
     {
-      "firma": "Avilo AS", "merknad": "Lansert 1. sep. 2026",
-      "tittel": "Rely CMMS: IK-mat og Renhold",
-      "punkter": [
+      "company": "Avilo AS",
+      "note": "Lansert 1. sep. 2026",
+      "title": "Rely CMMS: IK-mat og Renhold",
+      "highlights": [
         "To tjenester fra grunnen med egen backend, frontend og mobilapp",
         "Satte meg inn i en ukjent mikrotjenestearkitektur og gjenbrukte eksisterende tjenester"
       ],
-      "tagger": "Mikrotjenester, Mobil, Integrasjoner"
+      "tags": "Mikrotjenester, Mobil, Integrasjoner"
     },
     {
-      "firma": "Avilo AS", "merknad": "Rydi",
-      "tittel": "Migrering fra Python til C#/.NET",
-      "punkter": [
+      "company": "Avilo AS",
+      "note": "Rydi",
+      "title": "Migrering fra Python til C#/.NET",
+      "highlights": [
         "Typede domenemodeller i stedet for dynamiske strukturer",
         "Asynkrone REST-integrasjoner mot TomTom og Washd med HttpClient",
         "Lagdelt arkitektur med interfaces og DI for bedre testbarhet"
       ],
-      "tagger": "C#/.NET, REST, DI"
+      "tags": "C#/.NET, REST, DI"
     }
   ],
-  "erfaring": [
-    { "periode": "sep. 2026 →", "sted": "IT Selskapet AS", "rolle": "Fullstackutvikler, prosjektsamarbeid", "pagaende": true },
-    { "periode": "sep. 2026 →", "sted": "Gokstad Akademiet", "rolle": "Studentassistent og livekoding", "pagaende": true },
-    { "periode": "apr.–sep. 2026", "sted": "Avilo AS", "rolle": "Programvareutvikler", "pagaende": false },
-    { "periode": "2024–2026", "sted": "Gokstad Akademiet", "rolle": "Høyere fagskolegrad, backendprogrammering", "pagaende": false },
-    { "periode": "2025", "sted": "Gokstad Akademiet", "rolle": "Studentassistent og veileder i backend og cybersecurity", "pagaende": false },
-    { "periode": "2023–2025", "sted": "Gokstad Akademiet", "rolle": "Høyere fagskolegrad, frontendutvikling", "pagaende": false }
+  "experience": [
+    {
+      "period": "sep. 2026 →",
+      "place": "IT Selskapet AS",
+      "role": "Fullstackutvikler, prosjektsamarbeid",
+      "current": true
+    },
+    {
+      "period": "sep. 2026 →",
+      "place": "Gokstad Akademiet",
+      "role": "Studentassistent og livekoding",
+      "current": true
+    },
+    {
+      "period": "apr.–sep. 2026",
+      "place": "Avilo AS",
+      "role": "Programvareutvikler",
+      "current": false
+    },
+    {
+      "period": "2024–2026",
+      "place": "Gokstad Akademiet",
+      "role": "Høyere fagskolegrad, backendprogrammering",
+      "current": false
+    },
+    {
+      "period": "2025",
+      "place": "Gokstad Akademiet",
+      "role": "Studentassistent og veileder i backend og cybersecurity",
+      "current": false
+    },
+    {
+      "period": "2023–2025",
+      "place": "Gokstad Akademiet",
+      "role": "Høyere fagskolegrad, frontendutvikling",
+      "current": false
+    }
   ],
-  "omMeg": "Jeg trives best i backend, med API-er, dataflyt, integrasjoner og tester som beskriver hvordan systemet faktisk skal oppføre seg. Jeg tar gjerne frontenden også, så jeg kan levere en funksjon hele veien fra database til skjerm.\n\nJeg begynte med matematikk og informatikk på Universitetet i Oslo i 1992. Så tok kjøkkenet over i mange år, før jeg kom tilbake til koden i 2023.",
-  "forKoden": "Fagbrev som kokk, kjøkkensjef på Henie Onstad Kunstsenter, og eier og driver av Holmestrand Fjordhotell i nesten sju år. Før det var jeg teamleder på et kundesenter.\n\nDet har gitt meg erfaring med å levere under tidspress, lede folk og drive en bedrift.",
+  "about": "Jeg trives best i backend, med API-er, dataflyt, integrasjoner og tester som beskriver hvordan systemet faktisk skal oppføre seg. Jeg tar gjerne frontenden også, så jeg kan levere en funksjon hele veien fra database til skjerm.\n\nJeg begynte med matematikk og informatikk på Universitetet i Oslo i 1992. Så tok kjøkkenet over i mange år, før jeg kom tilbake til koden i 2023.",
+  "beforeCode": "Fagbrev som kokk, kjøkkensjef på Henie Onstad Kunstsenter, og eier og driver av Holmestrand Fjordhotell i nesten sju år. Før det var jeg teamleder på et kundesenter.\n\nDet har gitt meg erfaring med å levere under tidspress, lede folk og drive en bedrift.",
   "stack": [
-    { "gruppe": "Backend", "verktoy": "C#/.NET, REST API, MediatR, MassTransit, Node.js og TypeScript (Fastify)" },
-    { "gruppe": "Data", "verktoy": "PostgreSQL, MySQL, Marten, Firestore" },
-    { "gruppe": "Drift", "verktoy": "Docker, Kubernetes, AWS, Kafka/Redpanda, Keycloak" },
-    { "gruppe": "Testing", "verktoy": "xUnit, Testcontainers, GitHub Actions" },
-    { "gruppe": "Frontend", "verktoy": "React/TypeScript, React Native, Next.js, Tailwind" }
+    {
+      "group": "Backend",
+      "tools": "C#/.NET, REST API, MediatR, MassTransit, Node.js og TypeScript (Fastify)"
+    },
+    {
+      "group": "Data",
+      "tools": "PostgreSQL, MySQL, Marten, Firestore"
+    },
+    {
+      "group": "Drift",
+      "tools": "Docker, Kubernetes, AWS, Kafka/Redpanda, Keycloak"
+    },
+    {
+      "group": "Testing",
+      "tools": "xUnit, Testcontainers, GitHub Actions"
+    },
+    {
+      "group": "Frontend",
+      "tools": "React/TypeScript, React Native, Next.js, Tailwind"
+    }
   ],
-  "spillIngress": "For studenter og andre SQL-nysgjerrige",
-  "spill": [
-    { "tittel": "Mordet på Hotell Fjordglimt", "beskrivelse": "Løs et mord på et hotell i Horten ved å skrive SQL mot en database som kjører rett i nettleseren.", "lenke": "/fjordglimt/", "status": "Klar", "ferdigheter": "WHERE · JOIN · LIKE · GROUP BY · subqueries" },
-    { "tittel": "Millionene som forsvant", "beskrivelse": "Bygg databasen selv fra rådata, og finn ut hvor 4,2 millioner kroner har blitt av.", "lenke": "/millionene/", "status": "Prototype", "ferdigheter": "CREATE TABLE · INSERT · normalisering · fremmednøkler" }
+  "gamesIntro": "For studenter og andre SQL-nysgjerrige",
+  "games": [
+    {
+      "title": "Mordet på Hotell Fjordglimt",
+      "description": "Løs et mord på et hotell i Horten ved å skrive SQL mot en database som kjører rett i nettleseren.",
+      "url": "/fjordglimt/",
+      "status": "Klar",
+      "skills": "WHERE · JOIN · LIKE · GROUP BY · subqueries"
+    },
+    {
+      "title": "Millionene som forsvant",
+      "description": "Bygg databasen selv fra rådata, og finn ut hvor 4,2 millioner kroner har blitt av.",
+      "url": "/millionene/",
+      "status": "Prototype",
+      "skills": "CREATE TABLE · INSERT · normalisering · fremmednøkler"
+    }
   ],
-  "kontaktTittel": "Skal vi snakke sammen?",
-  "kontaktTekst": "Send meg en melding på LinkedIn, eller bruk e-post."
+  "contactTitle": "Skal vi snakke sammen?",
+  "contactText": "Send meg en melding på LinkedIn, eller bruk e-post."
 }

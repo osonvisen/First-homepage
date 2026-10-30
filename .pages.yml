@@ -1,94 +1,95 @@
-# Oppsett for Pages CMS (https://pagescms.org)
-# «Felles» gjelder begge språk. «Norsk» og «English» har samme felter, med tekst på hvert sitt språk.
+# Pages CMS configuration (https://pagescms.org)
+# "shared" applies to both languages. "norwegian" and "english" use the same fields, one per language.
+# Field names are English (code); labels are Norwegian (what you see in the editor).
 media:
   input: public/media
   output: media
 
 content:
-  - name: felles
+  - name: shared
     label: Felles (navn, bilde, kontakt)
     type: file
-    path: src/content/felles.json
+    path: src/content/shared.json
     format: json
     fields:
-      - { name: navn, label: Navn, type: string, required: true }
-      - { name: bilde, label: Bilde av deg, type: image, description: "Kvadratisk bilde blir finest. Siden lager mindre versjoner automatisk." }
-      - { name: sted, label: Sted, type: string }
-      - { name: apenForJobb, label: Vis «Åpen for nye muligheter», type: boolean }
-      - { name: epostBruker, label: "E-post: delen før @", type: string, description: "Settes sammen først når noen klikker «Vis e-post»." }
-      - { name: epostDomene, label: "E-post: delen etter @", type: string }
-      - name: lenker
+      - { name: name, label: Navn, type: string, required: true }
+      - { name: image, label: Bilde av deg, type: image, description: "Kvadratisk bilde blir finest. Siden lager mindre versjoner automatisk." }
+      - { name: location, label: Sted, type: string }
+      - { name: openToWork, label: Vis «Åpen for nye muligheter», type: boolean }
+      - { name: emailUser, label: "E-post: delen før @", type: string, description: "Settes sammen først når noen klikker «Vis e-post»." }
+      - { name: emailDomain, label: "E-post: delen etter @", type: string }
+      - name: links
         label: Lenker
         type: object
         list: true
         fields:
-          - { name: tekst, label: Tekst, type: string }
+          - { name: label, label: Tekst, type: string }
           - { name: url, label: Adresse, type: string }
 
-  - name: norsk
+  - name: norwegian
     label: Norsk tekst
     type: file
     path: src/content/nb.json
     format: json
-    fields: &tekstfelter
-      - { name: rolle, label: Rolle, type: string, required: true }
-      - { name: rolleDetalj, label: Rolle – detalj, type: string }
+    fields: &textFields
+      - { name: role, label: Rolle, type: string, required: true }
+      - { name: roleDetail, label: Rolle – detalj, type: string }
       - { name: status, label: Statustekst, type: string }
-      - { name: ingress, label: Ingress, type: text }
-      - { name: serEtter, label: Hva du ser etter, type: text }
-      - name: naa
+      - { name: intro, label: Ingress, type: text }
+      - { name: lookingFor, label: Hva du ser etter, type: text }
+      - name: now
         label: Akkurat nå
         type: object
         list: true
         fields:
-          - { name: etikett, label: Etikett, type: string }
-          - { name: tittel, label: Tittel, type: string }
-          - { name: tekst, label: Tekst, type: text }
-      - name: prosjekter
+          - { name: label, label: Etikett, type: string }
+          - { name: title, label: Tittel, type: string }
+          - { name: text, label: Tekst, type: text }
+      - name: projects
         label: Prosjekter
         type: object
         list: true
         fields:
-          - { name: firma, label: Firma, type: string }
-          - { name: merknad, label: Merknad, type: string }
-          - { name: tittel, label: Tittel, type: string }
-          - { name: punkter, label: Punkter, type: string, list: true }
-          - { name: tagger, label: Tagger (kommaseparert), type: string }
-      - name: erfaring
+          - { name: company, label: Firma, type: string }
+          - { name: note, label: Merknad, type: string }
+          - { name: title, label: Tittel, type: string }
+          - { name: highlights, label: Punkter, type: string, list: true }
+          - { name: tags, label: Tagger (kommaseparert), type: string }
+      - name: experience
         label: Erfaring og utdanning
         type: object
         list: true
         fields:
-          - { name: periode, label: Periode, type: string }
-          - { name: sted, label: Sted, type: string }
-          - { name: rolle, label: Rolle, type: string }
-          - { name: pagaende, label: Pågående, type: boolean }
-      - { name: omMeg, label: Om meg, type: text, description: "En tom linje gir nytt avsnitt." }
-      - { name: forKoden, label: Før koden, type: text }
+          - { name: period, label: Periode, type: string }
+          - { name: place, label: Sted, type: string }
+          - { name: role, label: Rolle, type: string }
+          - { name: current, label: Pågående, type: boolean }
+      - { name: about, label: Om meg, type: text, description: "En tom linje gir nytt avsnitt." }
+      - { name: beforeCode, label: Før koden, type: text }
       - name: stack
         label: Verktøykassa
         type: object
         list: true
         fields:
-          - { name: gruppe, label: Gruppe, type: string }
-          - { name: verktoy, label: Verktøy, type: string }
-      - { name: spillIngress, label: Spill – undertekst, type: string }
-      - name: spill
+          - { name: group, label: Gruppe, type: string }
+          - { name: tools, label: Verktøy, type: string }
+      - { name: gamesIntro, label: Spill – undertekst, type: string }
+      - name: games
         label: Spill
         type: object
         list: true
         fields:
-          - { name: tittel, label: Tittel, type: string }
-          - { name: beskrivelse, label: Beskrivelse, type: text }
-          - { name: lenke, label: Lenke, type: string, description: "For spill på siden: /mappenavn/, for eksempel /fjordglimt/" }
+          - { name: title, label: Tittel, type: string }
+          - { name: description, label: Beskrivelse, type: text }
+          - { name: url, label: Lenke, type: string, description: "For spill på siden: /mappenavn/, for eksempel /fjordglimt/" }
           - { name: status, label: Status, type: select, options: { values: [Klar, Prototype, Kommer snart] } }
-          - { name: ferdigheter, label: Hva man øver på, type: string }
-      - { name: kontaktTittel, label: Kontakt – tittel, type: string }
-      - { name: kontaktTekst, label: Kontakt – tekst, type: text }
+          - { name: skills, label: Hva man øver på, type: string }
+      - { name: contactTitle, label: Kontakt – tittel, type: string }
+      - { name: contactText, label: Kontakt – tekst, type: text }
 
   - name: english
     label: English text
     type: file
     path: src/content/en.json
     format: json
-    fields: *tekstfelter
+    fields: *textFields

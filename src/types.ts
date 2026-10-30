@@ -1,40 +1,41 @@
-// Formen på innholdsfilene i src/content. Feltene redigeres i Pages CMS (se .pages.yml).
+// Shape of the content files in src/content. The fields are edited in Pages CMS (see .pages.yml).
 export type Lang = "nb" | "en";
 
-export interface Lenke { tekst: string; url: string }
+export interface Link { label: string; url: string }
 
-export interface Felles {
-  navn: string;
-  bilde?: string;
-  sted?: string;
-  apenForJobb?: boolean;
-  epostBruker?: string;
-  epostDomene?: string;
-  lenker?: Lenke[];
+export interface Shared {
+  name: string;
+  image?: string;
+  location?: string;
+  openToWork?: boolean;
+  emailUser?: string;
+  emailDomain?: string;
+  links?: Link[];
 }
 
-export interface Naa { etikett: string; tittel: string; tekst: string }
-export interface Prosjekt { firma?: string; merknad?: string; tittel: string; punkter?: string[]; tagger?: string }
-export interface Erfaring { periode: string; sted: string; rolle: string; pagaende?: boolean }
-export interface Stack { gruppe: string; verktoy: string }
-export interface Spill { tittel: string; beskrivelse?: string; lenke?: string; status?: string; ferdigheter?: string }
+export interface NowItem { label: string; title: string; text: string }
+export interface Project { company?: string; note?: string; title: string; highlights?: string[]; tags?: string }
+export interface Experience { period: string; place: string; role: string; current?: boolean }
+export interface StackGroup { group: string; tools: string }
+export interface Game { title: string; description?: string; url?: string; status?: string; skills?: string }
 
-export interface Tekst {
-  rolle: string;
-  rolleDetalj?: string;
+export interface Text {
+  role: string;
+  roleDetail?: string;
   status?: string;
-  ingress?: string;
-  serEtter?: string;
-  naa?: Naa[];
-  prosjekter?: Prosjekt[];
-  erfaring?: Erfaring[];
-  omMeg?: string;
-  forKoden?: string;
-  stack?: Stack[];
-  spillIngress?: string;
-  spill?: Spill[];
-  kontaktTittel?: string;
-  kontaktTekst?: string;
+  intro?: string;
+  lookingFor?: string;
+  now?: NowItem[];
+  projects?: Project[];
+  experience?: Experience[];
+  about?: string;
+  beforeCode?: string;
+  stack?: StackGroup[];
+  gamesIntro?: string;
+  games?: Game[];
+  contactTitle?: string;
+  contactText?: string;
 }
 
-export interface SideData { lang: Lang; felles: Felles; tekst: Tekst; bildeSrc?: { small: string; large: string } }
+export interface PortraitSrc { small: string; large: string }
+export interface PageData { lang: Lang; shared: Shared; text: Text; portrait?: PortraitSrc }

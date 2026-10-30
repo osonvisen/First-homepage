@@ -1,29 +1,35 @@
 import { useState } from "react";
 
-// E-posten settes sammen først når noen klikker, så den ikke står i HTML-en for roboter.
-export function EmailReveal({ bruker, domene, vis, kopier, kopiert }: { bruker: string; domene: string; vis: string; kopier: string; kopiert: string }) {
-  const [synlig, setSynlig] = useState(false);
-  const [kopi, setKopi] = useState(false);
-  const adresse = `${bruker}@${domene}`;
+interface Props { user: string; domain: string; showLabel: string; copyLabel: string; copiedLabel: string }
 
-  if (!synlig) {
+// The address is assembled only after a click, so it never appears in the HTML for scrapers.
+export function EmailReveal({ user, domain, showLabel, copyLabel, copiedLabel }: Props) {
+  const [visible, setVisible] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const address = `${user}@${domain}`;
+
+  if (!visible) {
     return (
-      <button type="button" className="knapp kontur" onClick={() => setSynlig(true)}>
-        {vis}
+      <button type="button" className="button outline" onClick={() => setVisible(true)}>
+        {showLabel}
       </button>
     );
   }
   return (
-    <span className="epost">
-      <a href={`mailto:${adresse}`}>{adresse}</a>
+    <span className="email">
+      <a href={`mailto:${address}`}>{address}</a>
       <button
         type="button"
-        className="knapp liten kontur"
+        className="button small outline"
         onClick={async () => {
-          try { await navigator.clipboard.writeText(adresse); setKopi(true); setTimeout(() => setKopi(false), 2000); } catch { /* ignorer */ }
+          try {
+            await navigator.clipboard.writeText(address);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+          } catch { /* ignore */ }
         }}
       >
-        {kopi ? kopiert : kopier}
+        {copied ? copiedLabel : copyLabel}
       </button>
     </span>
   );

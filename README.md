@@ -1,58 +1,60 @@
 # orjans.no
 
-Personlig side for Ørjan Sønvisen, laget med React og TypeScript (Vite) og publisert med GitHub Pages.
+Personal website of Ørjan Sønvisen, built with React and TypeScript (Vite) and deployed with GitHub Pages.
 
-## Redigere innholdet
+## Editing content
 
-Logg inn på [Pages CMS](https://app.pagescms.org) med GitHub og velg dette repoet:
+Sign in to [Pages CMS](https://app.pagescms.org) with GitHub and select this repository:
 
-- **Felles:** navn, bilde, sted, «Åpen for nye muligheter», e-post og lenker
-- **Norsk tekst** og **English text:** alt annet, på hvert sitt språk
+- **Felles:** name, portrait, location, "open to work", email and links
+- **Norsk tekst** / **English text:** everything else, one file per language
 
-Når du lagrer, bygges og publiseres siden automatisk på et par minutter. Husk `git pull` før du jobber lokalt.
+Saving in Pages CMS commits to `main`, which builds and deploys the site within a couple of minutes.
+Remember to `git pull` before working locally.
 
-## Kjøre siden på egen maskin
+## Running locally
 
-Krever [Node.js](https://nodejs.org) 22 eller nyere.
+Requires [Node.js](https://nodejs.org) 22 or newer.
 
 ```bash
-npm install     # første gang
-npm run dev     # utviklingsserver på http://localhost:5173
-npm run build   # bygger ferdig side til dist/
-npx vite preview  # viser den ferdige siden lokalt
+npm install       # first time only
+npm run dev       # dev server on http://localhost:5173
+npm run build     # production build in dist/
+npx vite preview  # serve the production build locally
 ```
 
-## Hvordan siden bygges
+## How the build works
 
-`npm run build` gjør fire ting:
+`npm run build` runs four steps:
 
-1. Sjekker TypeScript (`tsc`)
-2. Bygger React-appen (`vite build`)
-3. Bygger en servervariant av appen (`vite build --ssr`)
-4. Kjører `scripts/prerender.ts`, som lager:
-   - ferdig HTML for `/` (norsk) og `/en/` (engelsk), så innholdet er synlig uten JavaScript
-   - strukturerte data (schema.org `Person`) i hver side
-   - `llms.txt` og `profil.json` for AI-agenter, og `sitemap.xml`
-   - nedskalerte portretter (`media/portrett-360.webp` og `-720.webp`)
+1. Type check (`tsc`)
+2. Client build (`vite build`)
+3. Server build of the app (`vite build --ssr`)
+4. `scripts/prerender.ts`, which generates:
+   - static HTML for `/` (Norwegian) and `/en/` (English), so the content is readable without JavaScript
+   - schema.org `Person` structured data on each page
+   - `llms.txt` and `profile.json` for AI agents, plus `sitemap.xml`
+   - resized portraits (`media/portrait-360.webp` and `-720.webp`)
 
-## Struktur
+## Structure
 
-| Fil / mappe | Hva det er |
+| Path | Purpose |
 |---|---|
-| `src/App.tsx` | Hele siden |
-| `src/components/` | Logo, temaknapp og e-postknapp |
-| `src/styles.css` | Utseende, farger og tema (kontrastsjekket mot WCAG 2.1 AA) |
-| `src/i18n.ts` | Faste tekster i grensesnittet på norsk og engelsk |
-| `src/content/` | Innholdet (redigeres i Pages CMS) |
-| `scripts/prerender.ts` | Ferdig HTML og agentfiler ved bygging |
-| `public/` | Filer som kopieres rett ut: spill, favicon, delingsbilde, robots.txt |
-| `.pages.yml` | Feltene i Pages CMS |
-| `.github/workflows/deploy.yml` | Bygger og publiserer ved hver push til `main` |
+| `src/App.tsx` | The page |
+| `src/components/` | Logo, theme toggle and email reveal |
+| `src/styles.css` | Styling, colours and themes (contrast-checked against WCAG 2.1 AA) |
+| `src/i18n.ts` | Fixed interface strings in Norwegian and English |
+| `src/content/` | Content (edited in Pages CMS) |
+| `src/content.ts` | Loads the content for a given language |
+| `scripts/prerender.ts` | Static HTML and agent files at build time |
+| `public/` | Copied as-is: games, favicon, social image, robots.txt |
+| `.pages.yml` | Pages CMS field configuration |
+| `.github/workflows/deploy.yml` | Builds and deploys on every push to `main` |
 
-## Legge til et nytt spill
+## Adding a game
 
-1. Lag en mappe under `public/`, for eksempel `public/mitt-spill/`, med en ferdig `index.html`.
-2. Legg det til under **Spill** i både norsk og engelsk tekst i Pages CMS, med lenken `/mitt-spill/`.
+1. Create a folder under `public/`, e.g. `public/my-game/`, containing a finished `index.html`.
+2. Add it under **Spill** in both the Norwegian and English text in Pages CMS, with the URL `/my-game/`.
 
-> Legg bare ut den ferdige `index.html` for spillene. Byggeskript og fasit inneholder løsningene
-> og skal ikke ligge i dette repoet, siden det er offentlig.
+> Only publish the finished `index.html` of each game. Build scripts and answer keys contain the
+> solutions and must not be committed here, since this repository is public.

@@ -1,4 +1,4 @@
-# Alle er velkomne, også AI-agenter som leter etter utviklere.
+# Everyone is welcome, including AI agents looking for developers.
 User-agent: *
 Allow: /
 
