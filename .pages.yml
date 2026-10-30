@@ -1,0 +1,68 @@
+# Oppsett for Pages CMS (https://pagescms.org)
+# Bestemmer hvilke felter du kan redigere når du logger inn.
+media:
+  input: public/media
+  output: media
+
+content:
+  - name: forside
+    label: Forside
+    type: file
+    path: src/content/forside.json
+    format: json
+    fields:
+      - name: navn
+        label: Navn
+        type: string
+        required: true
+      - name: tittel
+        label: Tittel
+        type: string
+        description: Vises under navnet, for eksempel «Utvikler og lærer».
+      - name: bilde
+        label: Bilde av deg
+        type: image
+        description: Valgfritt. Et kvadratisk bilde blir finest.
+      - name: intro
+        label: Om meg
+        type: text
+        description: En tom linje gir nytt avsnitt.
+      - name: lenker
+        label: Lenker
+        type: object
+        list: true
+        fields:
+          - name: tekst
+            label: Tekst
+            type: string
+          - name: url
+            label: Adresse
+            type: string
+      - name: prosjekter
+        label: Spill og prosjekter
+        type: object
+        list: true
+        fields:
+          - name: tittel
+            label: Tittel
+            type: string
+            required: true
+          - name: beskrivelse
+            label: Beskrivelse
+            type: text
+          - name: lenke
+            label: Lenke
+            type: string
+            description: For spill på denne siden skriver du mappenavnet med skråstrek, for eksempel fjordglimt/
+          - name: status
+            label: Status
+            type: select
+            options:
+              values: [Klar, Prototype, Kommer snart]
+          - name: ferdigheter
+            label: Hva man øver på
+            type: string
+            description: Kort liste, for eksempel «JOIN, GROUP BY»
+          - name: bilde
+            label: Bilde
+            type: image
