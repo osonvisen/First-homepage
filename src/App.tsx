@@ -185,6 +185,8 @@ export default function App({ lang, shared, text, portrait }: PageData) {
       <footer className="container site-footer">
         <span className="footer-brand"><Logo className="footer-logo" /> © {new Date().getFullYear()} {shared.name}{shared.location && ` · ${shared.location}`}</span>
         <span className="agent">{ui.agentNote} <a href="/llms.txt">/llms.txt</a> {ui.agentNoteEnd}</span>
+        {/* Opens the consent banner from public/analytics.js. */}
+        <button type="button" className="footer-link" data-cookie-settings>{ui.cookieSettings}</button>
       </footer>
     </>
   );

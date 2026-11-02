@@ -1,7 +1,7 @@
 // Runs after `vite build`. Renders static HTML for / and /en/ so search engines and
 // AI agents see the full content without running JavaScript. Also generates agent files
 // (llms.txt, profile.json, sitemap.xml) and resized portraits from the content in src/content.
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import sharp from "sharp";
@@ -10,6 +10,8 @@ import type { Experience, Link, PageData, Project, StackGroup } from "../src/typ
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");
 const SITE = "https://orjans.no";
+// Same line as in index.html. Loads Google Analytics after consent (see public/analytics.js).
+const ANALYTICS_TAG = '<script src="/analytics.js" defer></script>';
 
 const { render, pageData } = await import(pathToFileURL(join(ROOT, "dist-ssr", "entry-server.js")).href);
 const template = readFileSync(join(DIST, "index.html"), "utf8");
@@ -89,6 +91,26 @@ function renderPage(page: PageData) {
 writeFileSync(join(DIST, "index.html"), renderPage(nb));
 mkdirSync(join(DIST, "en"), { recursive: true });
 writeFileSync(join(DIST, "en", "index.html"), renderPage(en));
+
+// ---------- Analytics on game pages ----------
+// The games are built in the sql-games repo and copied into public/. Adding the tag here at build time
+// means every game gets analytics without the game build having to know about it.
+const LANGUAGE_FOLDERS = ["en"];
+const gameFolders = readdirSync(DIST, { withFileTypes: true })
+  .filter((entry) => entry.isDirectory() && !LANGUAGE_FOLDERS.includes(entry.name))
+  .map((entry) => entry.name)
+  .filter((name) => existsSync(join(DIST, name, "index.html")));
+for (const folder of gameFolders) {
+  const file = join(DIST, folder, "index.html");
+  const html = readFileSync(file, "utf8");
+  if (html.includes(ANALYTICS_TAG)) continue;
+  if (!html.includes("</head>")) {
+    console.warn(`No </head> in ${folder}/index.html, analytics not added.`);
+    continue;
+  }
+  writeFileSync(file, html.replace("</head>", `    ${ANALYTICS_TAG}\n  </head>`));
+  console.log(`Analytics added to /${folder}/`);
+}
 
 // ---------- llms.txt ----------
 const projectsMd = (page: PageData) =>
