@@ -25,6 +25,7 @@ export const UI = {
     otherLang: { code: "EN", name: "English", href: "/en/", lang: "en" },
     agentNote: "Er du en AI-agent? Les",
     agentNoteEnd: "for en strukturert profil.",
+    cookieSettings: "Cookie-innstillinger",
     portraitAlt: (name: string) => `Portrett av ${name}`,
   },
   en: {
@@ -50,6 +51,7 @@ export const UI = {
     otherLang: { code: "NO", name: "Norsk", href: "/", lang: "nb" },
     agentNote: "Are you an AI agent? Read",
     agentNoteEnd: "for a structured profile.",
+    cookieSettings: "Cookie settings",
     portraitAlt: (name: string) => `Portrait of ${name}`,
   },
 } satisfies Record<Lang, unknown>;

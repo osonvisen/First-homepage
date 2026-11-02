@@ -36,6 +36,19 @@ npx vite preview  # serve the production build locally
    - `llms.txt` and `profile.json` for AI agents, plus `sitemap.xml`
    - resized portraits (`media/portrait-360.webp` and `-720.webp`)
 
+## Analytics and cookie consent
+
+Google Analytics (`G-H9TY576PB9`) is handled by `public/analytics.js`, included with one line in `<head>`:
+
+```html
+<script src="/analytics.js" defer></script>
+```
+
+- Nothing is sent to Google until the visitor clicks **Godta/Accept** in the consent banner. The choice is stored in `localStorage` (`analytics-consent`).
+- `gtag.js` is only loaded on `orjans.no` and `www.orjans.no`. On Cloudflare previews and localhost the banner still shows, but no statistics are recorded.
+- Any element with the `data-cookie-settings` attribute reopens the banner (the footer has one).
+- `scripts/prerender.ts` adds the same line to every game page in `dist/` at build time, so games copied from `sql-games` need no changes.
+
 ## Structure
 
 | Path | Purpose |
