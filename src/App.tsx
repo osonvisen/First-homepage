@@ -14,7 +14,7 @@ function shortHash(s: string) {
   return (h >>> 0).toString(16).padStart(8, "0").slice(0, 7);
 }
 
-export default function App({ lang, shared, text, portrait }: PageData) {
+export default function App({ lang, shared, text, portrait, games }: PageData) {
   const ui = UI[lang];
   const [firstName, ...rest] = shared.name.split(" ");
   const lastName = rest.join(" ");
@@ -144,17 +144,17 @@ export default function App({ lang, shared, text, portrait }: PageData) {
           </section>
         )}
 
-        {text.games && text.games.length > 0 && (
+        {games.length > 0 && (
           <section className="section" id="games" aria-labelledby="games-heading">
             <div className="section-head"><h2 id="games-heading">{ui.games}</h2>{text.gamesIntro && <span className="command">{text.gamesIntro}</span>}</div>
             <ul className="games">
-              {text.games.map((g) => (
-                <li key={g.title}>
-                  <a className="game-card" href={g.url} {...(g.url ? externalProps(g.url) : {})}>
-                    {g.status && <span className="pixel-badge">{g.status}</span>}
+              {games.filter((g) => g.available).map((g) => (
+                <li key={g.id}>
+                  <a className="game-card" href={g.url}>
+                    <span className="pixel-badge">{g.languages}</span>
                     <h3 lang="nb">{g.title}</h3>
-                    {g.description && <p>{g.description}</p>}
-                    {g.skills && <p className="skills">{g.skills}</p>}
+                    <p>{g.description}</p>
+                    <p className="skills">{g.skills}</p>
                     <span className="play-now">{ui.playNow} →</span>
                   </a>
                 </li>

@@ -129,20 +129,29 @@
     }
   ],
   "gamesIntro": "For studenter og andre SQL-nysgjerrige",
+  "gamesPageIntro": "Frivillige spill for deg som vil bryne deg på SQL og Python. Jeg laget dem for studentene ved Gokstad Akademiet, men de er åpne for alle. Spill dem gjerne i rekkefølgen under, for hvert spill bygger litt på det forrige.",
+  "progressNote": "Fremgangen din lagres bare i denne nettleseren på denne maskinen. Bytter du nettleser eller maskin, eller sletter nettleserdata, starter du på nytt. Fremgangen sendes ikke noe sted.",
   "games": [
     {
+      "id": "fjordglimt",
       "title": "Mordet på Hotell Fjordglimt",
-      "description": "Løs et mord på et hotell i Horten ved å skrive SQL mot en database som kjører rett i nettleseren.",
-      "url": "/fjordglimt/",
-      "status": "Klar",
-      "skills": "WHERE · JOIN · LIKE · GROUP BY · subqueries"
+      "description": "Et mord på Hotell Fjordglimt i Horten skal oppklares, og alt du har å gå på, er en database. Still de riktige spørsmålene i SQL og følg sporene dit de fører. Databasen kjører rett i nettleseren, så du trenger ikke installere noe.",
+      "skills": "WHERE · JOIN · LIKE · GROUP BY · subqueries",
+      "studyFit": "Når du har lært SELECT, WHERE og JOIN."
     },
     {
+      "id": "millionene",
       "title": "Millionene som forsvant",
-      "description": "Bygg databasen selv fra rådata, og finn ut hvor 4,2 millioner kroner har blitt av.",
-      "url": "/millionene/",
-      "status": "Klar",
-      "skills": "CREATE TABLE · INSERT · normalisering · fremmednøkler"
+      "description": "4,2 millioner kroner er borte, og alt som finnes, er rådata i rot. Før du kan etterforske, må du bygge databasen selv: lage tabellene, fylle dem og knytte dem sammen. Først da kan du begynne å lete.",
+      "skills": "CREATE TABLE · INSERT · normalisering · fremmednøkler",
+      "studyFit": "Når du har lært å lage tabeller, normalisering og fremmednøkler."
+    },
+    {
+      "id": "innbruddet",
+      "title": "Innbruddet",
+      "description": "Hele medlemslista til et klatresenter i Tønsberg har dukket opp på et forum, og ingen der har delt den. Du får tilgang til databasen og jobber i Python for å finne ut hva som skjedde, og for å sørge for at det ikke skjer igjen.",
+      "skills": "Python med MySQL · cursor og fetchall · parametere · feilhåndtering",
+      "studyFit": "Etter økt 10 i Python + SQL. Del 2 passer etter Flask-økta."
     }
   ],
   "contactTitle": "Skal vi snakke sammen?",

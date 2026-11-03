@@ -14,5 +14,25 @@
       "label": "GitHub",
       "url": "https://github.com/osonvisen"
     }
+  ],
+  "games": [
+    {
+      "id": "fjordglimt",
+      "languages": "SQL",
+      "difficulty": 1,
+      "available": true
+    },
+    {
+      "id": "millionene",
+      "languages": "SQL",
+      "difficulty": 2,
+      "available": true
+    },
+    {
+      "id": "innbruddet",
+      "languages": "Python + SQL",
+      "difficulty": 3,
+      "available": false
+    }
   ]
 }
