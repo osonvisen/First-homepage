@@ -29,6 +29,7 @@ export const UI = {
     portraitAlt: (name: string) => `Portrett av ${name}`,
     gamesPage: {
       title: "Spill",
+      documentTitle: "SQL- og Python-spill",
       pathHeading: "Anbefalt rekkefølge",
       languages: "Språk",
       difficulty: "Krevende",
@@ -65,6 +66,7 @@ export const UI = {
     portraitAlt: (name: string) => `Portrait of ${name}`,
     gamesPage: {
       title: "Games",
+      documentTitle: "SQL and Python games",
       pathHeading: "Recommended order",
       languages: "Language",
       difficulty: "Demanding",

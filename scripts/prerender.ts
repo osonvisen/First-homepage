@@ -1,4 +1,4 @@
-// Runs after `vite build`. Renders static HTML for / and /en/ so search engines and
+// Runs after `vite build`. Renders static HTML for every page in src/routes.ts so search engines and
 // AI agents see the full content without running JavaScript. Also generates agent files
 // (llms.txt, profile.json, sitemap.xml) and resized portraits from the content in src/content.
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from "node:fs";
@@ -6,6 +6,8 @@ import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import sharp from "sharp";
 import type { Experience, Link, PageData, Project, StackGroup } from "../src/types.ts";
+import { PAGE_PATHS, ROUTES, pagePath, type PageKind, type Route } from "../src/routes.ts";
+import { UI } from "../src/i18n.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");
@@ -49,7 +51,7 @@ function jsonLd(page: PageData) {
     "@context": "https://schema.org",
     "@type": "Person",
     name: shared.name,
-    url: page.lang === "en" ? `${SITE}/en/` : `${SITE}/`,
+    url: `${SITE}${pagePath({ page: "home", lang: page.lang })}`,
     image: shared.image ? `${SITE}/media/portrait-720.webp` : undefined,
     jobTitle: t.role,
     description: t.intro,
@@ -61,43 +63,64 @@ function jsonLd(page: PageData) {
   };
 }
 
-// ---------- HTML per language ----------
-function renderPage(page: PageData) {
-  const t = page.text;
-  const url = page.lang === "en" ? `${SITE}/en/` : `${SITE}/`;
-  const title = `${shared.name} – ${t.role} (C#/.NET)`;
+// ---------- HTML per page and language ----------
+interface PageMeta { title: string; description: string; ogType: "profile" | "website"; structuredData?: object }
+
+// What differs between the pages in <head>. A new page adds one entry here.
+const META: Record<PageKind, (page: PageData) => PageMeta> = {
+  home: (page) => ({
+    title: `${shared.name} – ${page.text.role} (C#/.NET)`,
+    description: page.text.intro ?? "",
+    ogType: "profile",
+    structuredData: jsonLd(page),
+  }),
+  games: (page) => ({
+    title: `${UI[page.lang].gamesPage.documentTitle} – ${shared.name}`,
+    description: page.text.gamesPageIntro ?? "",
+    ogType: "website",
+  }),
+};
+
+function renderPage(route: Route) {
+  const page: PageData = pageData(route.lang);
+  const meta = META[route.page](page);
+  const url = `${SITE}${pagePath(route)}`;
+  const alternates = PAGE_PATHS[route.page];
   const head = [
-    `<title>${escapeHtml(title)}</title>`,
-    `<meta name="description" content="${escapeHtml(t.intro ?? "")}" />`,
+    `<title>${escapeHtml(meta.title)}</title>`,
+    `<meta name="description" content="${escapeHtml(meta.description)}" />`,
     `<link rel="canonical" href="${url}" />`,
-    `<link rel="alternate" hreflang="nb" href="${SITE}/" />`,
-    `<link rel="alternate" hreflang="en" href="${SITE}/en/" />`,
-    `<link rel="alternate" hreflang="x-default" href="${SITE}/" />`,
-    `<meta property="og:type" content="profile" />`,
-    `<meta property="og:title" content="${escapeHtml(title)}" />`,
-    `<meta property="og:description" content="${escapeHtml(t.intro ?? "")}" />`,
+    `<link rel="alternate" hreflang="nb" href="${SITE}${alternates.nb}" />`,
+    `<link rel="alternate" hreflang="en" href="${SITE}${alternates.en}" />`,
+    `<link rel="alternate" hreflang="x-default" href="${SITE}${alternates.nb}" />`,
+    `<meta property="og:type" content="${meta.ogType}" />`,
+    `<meta property="og:title" content="${escapeHtml(meta.title)}" />`,
+    `<meta property="og:description" content="${escapeHtml(meta.description)}" />`,
     `<meta property="og:url" content="${url}" />`,
     `<meta property="og:image" content="${SITE}/og.png" />`,
     `<meta property="og:locale" content="${page.lang === "en" ? "en_GB" : "nb_NO"}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
-    `<script type="application/ld+json">${JSON.stringify(jsonLd(page)).replace(/</g, "\\u003c")}</script>`,
+    ...(meta.structuredData ? [`<script type="application/ld+json">${JSON.stringify(meta.structuredData).replace(/</g, "\\u003c")}</script>`] : []),
   ].join("\n    ");
   return template
     .replace('<html lang="nb">', `<html lang="${page.lang}">`)
     .replace("<!--head-->", head)
-    .replace("<!--app-->", render({ page: "home", lang: page.lang }));
+    .replace("<!--app-->", render(route));
 }
 
-writeFileSync(join(DIST, "index.html"), renderPage(nb));
-mkdirSync(join(DIST, "en"), { recursive: true });
-writeFileSync(join(DIST, "en", "index.html"), renderPage(en));
+for (const route of ROUTES) {
+  const file = join(DIST, pagePath(route), "index.html");
+  mkdirSync(dirname(file), { recursive: true });
+  writeFileSync(file, renderPage(route));
+}
 
 // ---------- Analytics on game pages ----------
 // The games are built in the sql-games repo and copied into public/. Adding the tag here at build time
 // means every game gets analytics without the game build having to know about it.
-const LANGUAGE_FOLDERS = ["en"];
+// The top-level folders of the site's own pages ("en", "spill") are not games.
+const PAGE_FOLDERS = new Set(ROUTES.map((route) => pagePath(route).split("/")[1]).filter(Boolean));
 const gameFolders = readdirSync(DIST, { withFileTypes: true })
-  .filter((entry) => entry.isDirectory() && !LANGUAGE_FOLDERS.includes(entry.name))
+  .filter((entry) => entry.isDirectory() && !PAGE_FOLDERS.has(entry.name))
   .map((entry) => entry.name)
   .filter((name) => existsSync(join(DIST, name, "index.html")));
 for (const folder of gameFolders) {
@@ -216,4 +239,4 @@ ${pageEntry("/en/")}
 `
 );
 
-console.log(`Done: index.html, en/index.html, llms.txt, profile.json, sitemap.xml${shared.image ? ", portraits" : ""}`);
+console.log(`Done: ${ROUTES.map(pagePath).join(", ")}, llms.txt, profile.json, sitemap.xml${shared.image ? ", portraits" : ""}`);
