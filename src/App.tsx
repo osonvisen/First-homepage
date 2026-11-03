@@ -1,8 +1,9 @@
 import type { PageData } from "./types";
 import { UI, paragraphs } from "./i18n";
 import { Logo } from "./components/Logo";
-import { ThemeToggle } from "./components/ThemeToggle";
 import { EmailReveal } from "./components/EmailReveal";
+import { SiteHeader } from "./components/SiteHeader";
+import { SiteFooter } from "./components/SiteFooter";
 
 const isExternal = (url: string) => /^https?:\/\//.test(url);
 const externalProps = (url: string) => (isExternal(url) ? { target: "_blank", rel: "noopener" } : {});
@@ -21,30 +22,7 @@ export default function App({ lang, shared, text, portrait, games }: PageData) {
 
   return (
     <>
-      <a className="skip-link" href="#content">{ui.skipLink}</a>
-      <header className="site-header">
-        <div className="container header-inner">
-          <a className="brand" href={lang === "en" ? "/en/" : "/"}>
-            <Logo className="brand-logo" />
-            <span>orjans.no</span>
-          </a>
-          <nav aria-label={ui.mainNav} className="main-nav">
-            <ul>
-              <li><a href="#projects">{ui.nav.projects}</a></li>
-              <li><a href="#experience">{ui.nav.experience}</a></li>
-              <li><a href="#about">{ui.nav.about}</a></li>
-              <li><a href="#games">{ui.nav.games}</a></li>
-              <li><a href="#contact">{ui.nav.contact}</a></li>
-            </ul>
-          </nav>
-          <div className="header-tools">
-            <ThemeToggle labels={ui.theme} label={ui.themeLabel} />
-            <a className="pill" href={ui.otherLang.href} hrefLang={ui.otherLang.lang} lang={ui.otherLang.lang} aria-label={`${ui.otherLang.code} – ${ui.otherLang.name}`}>
-              {ui.otherLang.code}
-            </a>
-          </div>
-        </div>
-      </header>
+      <SiteHeader lang={lang} />
 
       <main id="content" className="container main">
         <section className="hero" aria-labelledby="name">
@@ -182,12 +160,7 @@ export default function App({ lang, shared, text, portrait, games }: PageData) {
         </section>
       </main>
 
-      <footer className="container site-footer">
-        <span className="footer-brand"><Logo className="footer-logo" /> © {new Date().getFullYear()} {shared.name}{shared.location && ` · ${shared.location}`}</span>
-        <span className="agent">{ui.agentNote} <a href="/llms.txt">/llms.txt</a> {ui.agentNoteEnd}</span>
-        {/* Opens the consent banner from public/analytics.js. */}
-        <button type="button" className="footer-link" data-cookie-settings>{ui.cookieSettings}</button>
-      </footer>
+      <SiteFooter lang={lang} name={shared.name} location={shared.location} />
     </>
   );
 }
