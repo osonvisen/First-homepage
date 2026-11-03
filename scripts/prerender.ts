@@ -125,8 +125,8 @@ ${blocks(en.text.about)}
 ${blocks(en.text.beforeCode)}
 
 ## More
-- [Profile page (English)](${SITE}/en/)
-- [Profilside (norsk)](${SITE}/)
+- [Profile page (English)](${SITE}${pagePath({ page: "home", lang: "en" })})
+- [Profilside (norsk)](${SITE}${pagePath({ page: "home", lang: "nb" })})
 - [SQL and Python games (English overview)](${SITE}${pagePath({ page: "games", lang: "en" })})
 - [SQL- og Python-spill (norsk)](${SITE}${pagePath({ page: "games", lang: "nb" })})
 - [Structured profile (JSON Resume)](${SITE}/profile.json)
@@ -148,7 +148,7 @@ const profile = {
     name: shared.name,
     label: `${en.text.role} (C#/.NET)`,
     image: shared.image ? `${SITE}/media/portrait-720.webp` : undefined,
-    url: `${SITE}/en/`,
+    url: `${SITE}${pagePath({ page: "home", lang: "en" })}`,
     summary: [en.text.intro, en.text.lookingFor].filter(Boolean).join(" "),
     location: { city: shared.location, countryCode: "NO" },
     profiles: (shared.links ?? []).map((l: Link) => ({ network: l.label, url: l.url })),
