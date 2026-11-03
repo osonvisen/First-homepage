@@ -27,6 +27,16 @@ export const UI = {
     agentNoteEnd: "for en strukturert profil.",
     cookieSettings: "Cookie-innstillinger",
     portraitAlt: (name: string) => `Portrett av ${name}`,
+    gamesPage: {
+      title: "Spill",
+      pathHeading: "Anbefalt rekkefølge",
+      languages: "Språk",
+      difficulty: "Krevende",
+      difficultyValue: (level: number, max: number) => `${level} av ${max}`,
+      skills: "Øver på",
+      studyFit: "Når i studiet",
+      comingSoon: "Kommer snart",
+    },
   },
   en: {
     skipLink: "Skip to content",
@@ -53,6 +63,16 @@ export const UI = {
     agentNoteEnd: "for a structured profile.",
     cookieSettings: "Cookie settings",
     portraitAlt: (name: string) => `Portrait of ${name}`,
+    gamesPage: {
+      title: "Games",
+      pathHeading: "Recommended order",
+      languages: "Language",
+      difficulty: "Demanding",
+      difficultyValue: (level: number, max: number) => `${level} of ${max}`,
+      skills: "Practises",
+      studyFit: "When in your studies",
+      comingSoon: "Coming soon",
+    },
   },
 } satisfies Record<Lang, unknown>;
 

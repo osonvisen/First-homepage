@@ -183,11 +183,33 @@ h3 { font-family: var(--f-body); font-weight: 600; font-size: 1.2rem; line-heigh
   transition: transform .15s, box-shadow .15s;
 }
 .game-card:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--amber-fill); }
-.game-card h3 { font-family: var(--f-display); font-weight: 700; font-size: 1.45rem; font-variation-settings: "SOFT" 100, "WONK" 1; }
-.game-card p { color: #c9cbe0; }
+.game-card h3, .path-card h3 { font-family: var(--f-display); font-weight: 700; font-size: 1.45rem; font-variation-settings: "SOFT" 100, "WONK" 1; }
+.game-card p, .path-card p { color: #c9cbe0; }
 .skills { font: 400 13px var(--f-mono); }
 .pixel-badge { align-self: flex-start; font: 400 11px var(--f-pixel); padding: 4px 10px; border-radius: 999px; background: #ffd34d; color: #1b1d2a; }
 .play-now { margin-top: auto; font-weight: 600; color: #ffd34d; }
+
+.page-head { display: flex; flex-direction: column; gap: 16px; }
+.page-title { font-size: clamp(2.2rem, 5vw, 3.4rem); }
+
+/* Games page: the cards form a numbered path in the recommended order. */
+.game-path { list-style: none; display: flex; flex-direction: column; gap: 28px; }
+.game-path > li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 16px; position: relative; }
+.game-path > li:not(:last-child)::before { content: ""; position: absolute; left: 21px; top: 52px; bottom: -24px; border-left: 2px dashed var(--line-strong); }
+.path-step { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: var(--amber-fill); color: var(--on-amber); font: 400 15px var(--f-pixel); }
+.path-card { display: flex; flex-direction: column; gap: 14px; padding: 24px; border-radius: var(--r); background: var(--game-bg); color: var(--game-text); box-shadow: 5px 5px 0 var(--amber-fill); }
+.path-card.unavailable { box-shadow: 5px 5px 0 var(--line-strong); }
+/* The site's focus colour is too dark against the game background in light mode. */
+.path-card :focus-visible { outline-color: #ffd34d; }
+.path-card .button { align-self: flex-start; }
+.game-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 12px 24px; }
+.game-facts div { display: flex; flex-direction: column; gap: 4px; }
+.game-facts dt { font: 500 12px var(--f-mono); text-transform: uppercase; letter-spacing: .06em; color: #ffd34d; }
+.game-facts dd { font-size: .95rem; }
+.difficulty { display: inline-flex; align-items: center; gap: 6px; min-height: 1.5em; }
+.difficulty span { width: 12px; height: 12px; border-radius: 50%; border: 2px solid #c9cbe0; }
+.difficulty .filled { background: #ffd34d; border-color: #ffd34d; }
+.coming-soon { align-self: flex-start; font: 400 12px var(--f-pixel); padding: 6px 12px; border-radius: 999px; border: 1.5px dashed #c9cbe0; color: #c9cbe0; }
 
 .contact { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: center; background: var(--surface); border: 1.5px solid var(--line-strong); border-radius: var(--r-large); padding: 36px; box-shadow: 8px 8px 0 var(--lilac); }
 .contact-text { display: flex; flex-direction: column; gap: 10px; max-width: 56ch; color: var(--text-soft); }
@@ -212,4 +234,6 @@ h3 { font-family: var(--f-body); font-weight: 600; font-size: 1.2rem; line-heigh
   .contact { grid-template-columns: 1fr; padding: 24px; }
   .log li { grid-template-columns: minmax(0, 1fr); gap: 0; }
   .hash { display: none; }
+  .game-path > li { grid-template-columns: minmax(0, 1fr); }
+  .game-path > li::before { display: none; }
 }
