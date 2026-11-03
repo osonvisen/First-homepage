@@ -3,8 +3,14 @@ import { UI } from "./i18n";
 import { SiteHeader } from "./components/SiteHeader";
 import { SiteFooter } from "./components/SiteFooter";
 import { GameCard } from "./components/GameCard";
+import { createLocalProgressStore, type ProgressStore } from "./games/progressStore";
 
-export function GamesPage({ lang, shared, text, games }: PageData) {
+// Created once. It only touches localStorage when a card reads its progress after hydration.
+const browserProgressStore = createLocalProgressStore();
+
+interface Props extends PageData { progressStore?: ProgressStore }
+
+export function GamesPage({ lang, shared, text, games, progressStore = browserProgressStore }: Props) {
   const labels = UI[lang].gamesPage;
 
   return (
@@ -15,6 +21,7 @@ export function GamesPage({ lang, shared, text, games }: PageData) {
         <div className="page-head">
           <h1 className="page-title">{labels.title}</h1>
           {text.gamesPageIntro && <p className="intro">{text.gamesPageIntro}</p>}
+          {text.progressNote && <p className="progress-note">{text.progressNote}</p>}
         </div>
 
         {games.length > 0 && (
@@ -25,7 +32,7 @@ export function GamesPage({ lang, shared, text, games }: PageData) {
               {games.map((game, index) => (
                 <li key={game.id}>
                   <span className="path-step" aria-hidden="true">{index + 1}</span>
-                  <GameCard game={game} lang={lang} />
+                  <GameCard game={game} lang={lang} progressStore={progressStore} />
                 </li>
               ))}
             </ol>

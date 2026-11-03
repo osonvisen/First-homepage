@@ -1,15 +1,19 @@
 import { UI } from "../i18n";
 import { GAME_LANGUAGE } from "../games/catalog";
+import type { ProgressStore } from "../games/progressStore";
+import { useGameProgress } from "../games/useGameProgress";
 import type { GameCard as GameCardData, Lang } from "../types";
 import { DifficultyDots } from "./DifficultyDots";
+import { ProgressBadge } from "./ProgressBadge";
 
-interface Props { game: GameCardData; lang: Lang }
+interface Props { game: GameCardData; lang: Lang; progressStore: ProgressStore }
 
-export function GameCard({ game, lang }: Props) {
+export function GameCard({ game, lang, progressStore }: Props) {
   const ui = UI[lang];
   const labels = ui.gamesPage;
   const titleId = `game-${game.id}-title`;
   const isInOtherLanguage = lang !== GAME_LANGUAGE;
+  const progress = useGameProgress(progressStore, game.id);
 
   return (
     <article className={game.available ? "path-card" : "path-card unavailable"} aria-labelledby={titleId}>
@@ -27,8 +31,11 @@ export function GameCard({ game, lang }: Props) {
         <div><dt>{labels.studyFit}</dt><dd>{game.studyFit}</dd></div>
       </dl>
       {game.available ? (
-        // Every card has the same button text; aria-describedby tells screen readers which game it is.
-        <a className="button filled" href={game.url} aria-describedby={titleId}>{ui.playNow} →</a>
+        <div className="card-actions">
+          {/* Every card has the same button text; aria-describedby tells screen readers which game it is. */}
+          <a className="button filled" href={game.url} aria-describedby={titleId}>{ui.playNow} →</a>
+          <ProgressBadge progress={progress} labels={labels.progress} />
+        </div>
       ) : (
         <p className="coming-soon">{labels.comingSoon}</p>
       )}

@@ -18,7 +18,7 @@ const card = (id: string, title: string): GameCard => ({
 const page = (lang: Lang, games: GameCard[]): PageData => ({
   lang,
   shared: { name: "Test Person" },
-  text: { role: "Developer", gamesPageIntro: "Optional games for students." },
+  text: { role: "Developer", gamesPageIntro: "Optional games for students.", progressNote: "Saved only in this browser." },
   games,
 });
 
@@ -29,6 +29,10 @@ describe("GamesPage", () => {
     const html = render("nb", []);
     expect(html).toMatch(/<h1[^>]*>Spill<\/h1>/);
     expect(html).toContain("Optional games for students.");
+  });
+
+  it("says where the progress is saved", () => {
+    expect(render("nb", [])).toContain('<p class="progress-note">Saved only in this browser.</p>');
   });
 
   it("shows the games as a numbered path in the recommended order", () => {
