@@ -1,6 +1,6 @@
 // Builds the <head> tags for each page: title, description, canonical, hreflang, Open Graph and
 // structured data. Kept apart from scripts/prerender.ts so it can be tested without a build.
-import type { Link, PageData, StackGroup } from "../src/types.ts";
+import type { Difficulty, Link, PageData, StackGroup } from "../src/types.ts";
 import { PAGE_PATHS, pagePath, type PageKind, type Route } from "../src/routes.ts";
 import { UI } from "../src/i18n.ts";
 
@@ -26,6 +26,47 @@ function personJsonLd({ lang, shared, text }: PageData) {
   };
 }
 
+// The games themselves are written in Norwegian, whatever the language of the page.
+const GAME_LANGUAGE = "nb";
+
+// How demanding a game is (1–3), in the words schema.org consumers expect for educationalLevel.
+const EDUCATIONAL_LEVELS: Record<Difficulty, string> = { 1: "Beginner", 2: "Intermediate", 3: "Advanced" };
+
+function gamesJsonLd(page: PageData, name: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name,
+    description: page.text.gamesPageIntro,
+    url: `${SITE}${pagePath({ page: "games", lang: page.lang })}`,
+    inLanguage: page.lang,
+    author: { "@type": "Person", name: page.shared.name, url: `${SITE}${pagePath({ page: "home", lang: page.lang })}` },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListOrder: "https://schema.org/ItemListOrderAscending",
+      numberOfItems: page.games.length,
+      itemListElement: page.games.map((game, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "LearningResource",
+          name: game.title,
+          description: game.description,
+          // A game that is not available has no page yet, so it gets no URL.
+          url: game.available ? `${SITE}${game.url}` : undefined,
+          inLanguage: GAME_LANGUAGE,
+          learningResourceType: "game",
+          educationalLevel: EDUCATIONAL_LEVELS[game.difficulty],
+          teaches: game.skills,
+          keywords: game.languages,
+          isAccessibleForFree: true,
+          creativeWorkStatus: game.available ? "Published" : "Incomplete",
+        },
+      })),
+    },
+  };
+}
+
 // ---------- What differs between the pages ----------
 interface PageMeta { title: string; description: string; ogType: "profile" | "website"; structuredData?: object }
 
@@ -41,6 +82,7 @@ const META: Record<PageKind, (page: PageData) => PageMeta> = {
     title: `${UI[page.lang].gamesPage.documentTitle} – ${page.shared.name}`,
     description: page.text.gamesPageIntro ?? "",
     ogType: "website",
+    structuredData: gamesJsonLd(page, UI[page.lang].gamesPage.documentTitle),
   }),
 };
 
