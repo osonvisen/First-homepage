@@ -6,12 +6,11 @@ import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import sharp from "sharp";
 import type { Experience, Link, PageData, Project, StackGroup } from "../src/types.ts";
-import { PAGE_PATHS, ROUTES, pagePath, type PageKind, type Route } from "../src/routes.ts";
-import { UI } from "../src/i18n.ts";
+import { ROUTES, pagePath, type Route } from "../src/routes.ts";
+import { SITE, buildHead } from "./head.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");
-const SITE = "https://orjans.no";
 // Same line as in index.html. Loads Google Analytics after consent (see public/analytics.js).
 const ANALYTICS_TAG = '<script src="/analytics.js" defer></script>';
 
@@ -21,7 +20,6 @@ const template = readFileSync(join(DIST, "index.html"), "utf8");
 const nb: PageData = pageData("nb");
 const en: PageData = pageData("en");
 const shared = nb.shared;
-const escapeHtml = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const linkTo = (name: string) => (shared.links ?? []).find((l: Link) => l.label.toLowerCase().includes(name))?.url;
 // Written out so language models understand it, but simple scrapers looking for "name@domain" do not.
 const emailText = shared.emailUser && shared.emailDomain
@@ -44,67 +42,12 @@ if (shared.image) {
   }
 }
 
-// ---------- Structured data (schema.org) ----------
-function jsonLd(page: PageData) {
-  const t = page.text;
-  return {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: shared.name,
-    url: `${SITE}${pagePath({ page: "home", lang: page.lang })}`,
-    image: shared.image ? `${SITE}/media/portrait-720.webp` : undefined,
-    jobTitle: t.role,
-    description: t.intro,
-    address: shared.location ? { "@type": "PostalAddress", addressLocality: shared.location, addressCountry: "NO" } : undefined,
-    sameAs: (shared.links ?? []).map((l: Link) => l.url),
-    knowsAbout: (t.stack ?? []).flatMap((s: StackGroup) => s.tools.split(/,| og | and /).map((x) => x.trim()).filter(Boolean)),
-    knowsLanguage: ["nb", "en"],
-    alumniOf: { "@type": "EducationalOrganization", name: "Gokstad Akademiet" },
-  };
-}
-
 // ---------- HTML per page and language ----------
-interface PageMeta { title: string; description: string; ogType: "profile" | "website"; structuredData?: object }
-
-// What differs between the pages in <head>. A new page adds one entry here.
-const META: Record<PageKind, (page: PageData) => PageMeta> = {
-  home: (page) => ({
-    title: `${shared.name} – ${page.text.role} (C#/.NET)`,
-    description: page.text.intro ?? "",
-    ogType: "profile",
-    structuredData: jsonLd(page),
-  }),
-  games: (page) => ({
-    title: `${UI[page.lang].gamesPage.documentTitle} – ${shared.name}`,
-    description: page.text.gamesPageIntro ?? "",
-    ogType: "website",
-  }),
-};
-
 function renderPage(route: Route) {
   const page: PageData = pageData(route.lang);
-  const meta = META[route.page](page);
-  const url = `${SITE}${pagePath(route)}`;
-  const alternates = PAGE_PATHS[route.page];
-  const head = [
-    `<title>${escapeHtml(meta.title)}</title>`,
-    `<meta name="description" content="${escapeHtml(meta.description)}" />`,
-    `<link rel="canonical" href="${url}" />`,
-    `<link rel="alternate" hreflang="nb" href="${SITE}${alternates.nb}" />`,
-    `<link rel="alternate" hreflang="en" href="${SITE}${alternates.en}" />`,
-    `<link rel="alternate" hreflang="x-default" href="${SITE}${alternates.nb}" />`,
-    `<meta property="og:type" content="${meta.ogType}" />`,
-    `<meta property="og:title" content="${escapeHtml(meta.title)}" />`,
-    `<meta property="og:description" content="${escapeHtml(meta.description)}" />`,
-    `<meta property="og:url" content="${url}" />`,
-    `<meta property="og:image" content="${SITE}/og.png" />`,
-    `<meta property="og:locale" content="${page.lang === "en" ? "en_GB" : "nb_NO"}" />`,
-    `<meta name="twitter:card" content="summary_large_image" />`,
-    ...(meta.structuredData ? [`<script type="application/ld+json">${JSON.stringify(meta.structuredData).replace(/</g, "\\u003c")}</script>`] : []),
-  ].join("\n    ");
   return template
     .replace('<html lang="nb">', `<html lang="${page.lang}">`)
-    .replace("<!--head-->", head)
+    .replace("<!--head-->", buildHead(route, page))
     .replace("<!--app-->", render(route));
 }
 
