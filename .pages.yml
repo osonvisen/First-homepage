@@ -82,12 +82,22 @@ content:
         fields:
           - { name: group, label: Gruppe, type: string }
           - { name: tools, label: Verktøy, type: string }
-      - { name: gamesIntro, label: Spill – undertekst, type: string }
+      - { name: gamesIntro, label: Spill – undertekst på forsiden, type: string }
+      - { name: gamesPageIntro, label: Spillsiden – innledning, type: text }
+      - { name: progressNote, label: Spillsiden – om lagring av fremgang, type: text }
       - name: games
-        label: Spill
+        label: Spill – tekst
         type: object
         list: true
         fields:
+          - name: id
+            label: Spill
+            type: select
+            options:
+              values:
+                - { name: fjordglimt, label: Fjordglimt }
+                - { name: millionene, label: Millionene }
+                - { name: innbruddet, label: Innbruddet }
           - { name: title, label: Tittel, type: string }
           - { name: description, label: Presentasjon, type: text, description: "To–tre setninger. Ikke røp noe om løsningen." }
           - { name: skills, label: Hva man øver på, type: string }

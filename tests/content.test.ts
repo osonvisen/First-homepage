@@ -1,6 +1,8 @@
 // Checks the real content in src/content. It is edited in Pages CMS, which cannot enforce
 // these rules itself, and deploy.yml runs the tests before publishing.
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
+import { parse } from "yaml";
 import shared from "../src/content/shared.json";
 import nb from "../src/content/nb.json";
 import en from "../src/content/en.json";
@@ -11,6 +13,20 @@ const LANGUAGES: unknown[] = ["SQL", "Python + SQL"];
 const FOLDER_NAME = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
 const gameIds = shared.games.map((g) => g.id);
+
+// Only the parts of the Pages CMS config this test reads.
+interface CmsField { name: string; fields?: CmsField[]; options?: { values?: (string | { name: string })[] } }
+interface CmsConfig { content: { name: string; fields?: CmsField[] }[] }
+
+const cms = parse(readFileSync(new URL("../.pages.yml", import.meta.url), "utf8")) as CmsConfig;
+const fieldNamed = (fields: CmsField[] | undefined, name: string) => fields?.find((f) => f.name === name);
+
+/** The ids the editor can choose from for a game text, in the given content entry. */
+function cmsGameIdOptions(entry: string): string[] {
+  const games = fieldNamed(cms.content.find((c) => c.name === entry)?.fields, "games");
+  const values = fieldNamed(games?.fields, "id")?.options?.values ?? [];
+  return values.map((v) => (typeof v === "string" ? v : v.name));
+}
 
 describe("games in shared.json", () => {
   it("has unique ids", () => {
@@ -53,5 +69,11 @@ describe.each([
   it("has an intro and a note on where progress is saved", () => {
     expect(content.gamesPageIntro.trim()).not.toBe("");
     expect(content.progressNote.trim()).not.toBe("");
+  });
+});
+
+describe.each(["norwegian", "english"])("game text select in .pages.yml (%s)", (entry) => {
+  it("offers exactly the game ids in shared.json", () => {
+    expect([...cmsGameIdOptions(entry)].sort()).toEqual([...gameIds].sort());
   });
 });
