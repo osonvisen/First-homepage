@@ -22,7 +22,7 @@ export default function App({ lang, shared, text, portrait, games }: PageData) {
 
   return (
     <>
-      <SiteHeader lang={lang} />
+      <SiteHeader lang={lang} page="home" />
 
       <main id="content" className="container main">
         <section className="hero" aria-labelledby="name">

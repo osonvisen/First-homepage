@@ -1,14 +1,14 @@
 import { StrictMode } from "react";
 import { renderToString } from "react-dom/server";
-import App from "./App";
+import { Page } from "./Page";
 import { pageData } from "./content";
-import type { Lang } from "./types";
+import type { Route } from "./routes";
 
-// Only used at build time, to render static HTML for / and /en/.
-export function render(lang: Lang) {
+// Only used at build time, to render static HTML for every page in ROUTES.
+export function render({ page, lang }: Route) {
   return renderToString(
     <StrictMode>
-      <App {...pageData(lang)} />
+      <Page page={page} {...pageData(lang)} />
     </StrictMode>
   );
 }

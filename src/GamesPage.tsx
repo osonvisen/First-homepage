@@ -9,7 +9,7 @@ export function GamesPage({ lang, shared, text, games }: PageData) {
 
   return (
     <>
-      <SiteHeader lang={lang} />
+      <SiteHeader lang={lang} page="games" />
 
       <main id="content" className="container main">
         <div className="page-head">

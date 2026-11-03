@@ -85,7 +85,7 @@ function renderPage(page: PageData) {
   return template
     .replace('<html lang="nb">', `<html lang="${page.lang}">`)
     .replace("<!--head-->", head)
-    .replace("<!--app-->", render(page.lang));
+    .replace("<!--app-->", render({ page: "home", lang: page.lang }));
 }
 
 writeFileSync(join(DIST, "index.html"), renderPage(nb));
