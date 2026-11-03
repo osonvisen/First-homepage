@@ -1,4 +1,7 @@
-import type { Game, GameCard, GameText } from "../types";
+import type { Game, GameCard, GameId, GameText } from "../types";
+
+/** Games are published in public/<id>/ and served from /<id>/. */
+export const gameUrl = (id: GameId) => `/${id}/`;
 
 /**
  * Joins the shared facts about each game with its text in one language, in the recommended order.
@@ -8,6 +11,6 @@ import type { Game, GameCard, GameText } from "../types";
 export function gameCards(games: readonly Game[], texts: readonly GameText[]): GameCard[] {
   return games.flatMap((game) => {
     const text = texts.find((t) => t.id === game.id);
-    return text ? [{ ...game, ...text, url: `/${game.id}/` }] : [];
+    return text ? [{ ...game, ...text, url: gameUrl(game.id) }] : [];
   });
 }

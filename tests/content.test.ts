@@ -1,6 +1,6 @@
 // Checks the real content in src/content. It is edited in Pages CMS, which cannot enforce
 // these rules itself, and deploy.yml runs the tests before publishing.
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { parse } from "yaml";
 import shared from "../src/content/shared.json";
@@ -47,6 +47,15 @@ describe("games in shared.json", () => {
 
   it.each(shared.games)("$id says whether it is available", (game) => {
     expect(typeof game.available).toBe("boolean");
+  });
+
+  // Stops a game from being marked as ready in Pages CMS before its files are published.
+  it("has published every game that is marked available", () => {
+    const unpublished = shared.games
+      .filter((game) => game.available)
+      .filter((game) => !existsSync(new URL(`../public/${game.id}/index.html`, import.meta.url)))
+      .map((game) => `public/${game.id}/index.html`);
+    expect(unpublished).toEqual([]);
   });
 });
 

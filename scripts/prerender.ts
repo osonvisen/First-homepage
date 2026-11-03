@@ -8,6 +8,7 @@ import sharp from "sharp";
 import type { Experience, Link, PageData, Project, StackGroup } from "../src/types.ts";
 import { ROUTES, pagePath, type Route } from "../src/routes.ts";
 import { SITE, buildHead } from "./head.ts";
+import { buildSitemap } from "./sitemap.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");
@@ -165,21 +166,6 @@ const profile = {
 writeFileSync(join(DIST, "profile.json"), JSON.stringify(profile, null, 2));
 
 // ---------- sitemap.xml ----------
-const today = new Date().toISOString().slice(0, 10);
-const pageEntry = (path: string) => `  <url><loc>${SITE}${path}</loc><lastmod>${today}</lastmod>
-    <xhtml:link rel="alternate" hreflang="nb" href="${SITE}/" />
-    <xhtml:link rel="alternate" hreflang="en" href="${SITE}/en/" />
-  </url>`;
-writeFileSync(
-  join(DIST, "sitemap.xml"),
-  `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${pageEntry("/")}
-${pageEntry("/en/")}
-  <url><loc>${SITE}/fjordglimt/</loc></url>
-  <url><loc>${SITE}/millionene/</loc></url>
-</urlset>
-`
-);
+writeFileSync(join(DIST, "sitemap.xml"), buildSitemap(shared.games ?? [], new Date().toISOString().slice(0, 10)));
 
 console.log(`Done: ${ROUTES.map(pagePath).join(", ")}, llms.txt, profile.json, sitemap.xml${shared.image ? ", portraits" : ""}`);
