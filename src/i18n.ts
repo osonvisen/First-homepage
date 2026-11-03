@@ -38,6 +38,7 @@ export const UI = {
       skills: "Øver på",
       studyFit: "Når i studiet",
       comingSoon: "Kommer snart",
+      gameLanguage: "På norsk",
     },
   },
   en: {
@@ -76,6 +77,7 @@ export const UI = {
       skills: "Practises",
       studyFit: "When in your studies",
       comingSoon: "Coming soon",
+      gameLanguage: "In Norwegian",
     },
   },
 } satisfies Record<Lang, unknown>;

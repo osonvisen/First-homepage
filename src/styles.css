@@ -187,6 +187,8 @@ h3 { font-family: var(--f-body); font-weight: 600; font-size: 1.2rem; line-heigh
 .game-card p, .path-card p { color: #c9cbe0; }
 .skills { font: 400 13px var(--f-mono); }
 .pixel-badge { align-self: flex-start; font: 400 11px var(--f-pixel); padding: 4px 10px; border-radius: 999px; background: #ffd34d; color: #1b1d2a; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; }
+.pixel-badge.outline { background: transparent; color: #ffd34d; border: 1.5px solid #ffd34d; }
 .play-now { margin-top: auto; font-weight: 600; color: #ffd34d; }
 
 .page-head { display: flex; flex-direction: column; gap: 16px; }

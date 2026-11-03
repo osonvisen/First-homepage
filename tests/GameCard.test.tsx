@@ -42,4 +42,12 @@ describe("GameCard", () => {
     expect(html).toContain('aria-label="3 of 3"');
     expect(html).toContain("Play now");
   });
+
+  it("says the game is in Norwegian on the English page", () => {
+    expect(renderToString(<GameCard game={card()} lang="en" />)).toContain('<span class="pixel-badge outline">In Norwegian</span>');
+  });
+
+  it("does not mark the language on the Norwegian page", () => {
+    expect(renderToString(<GameCard game={card()} lang="nb" />)).not.toContain("pixel-badge outline");
+  });
 });

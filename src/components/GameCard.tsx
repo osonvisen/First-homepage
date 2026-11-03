@@ -1,4 +1,5 @@
 import { UI } from "../i18n";
+import { GAME_LANGUAGE } from "../games/catalog";
 import type { GameCard as GameCardData, Lang } from "../types";
 import { DifficultyDots } from "./DifficultyDots";
 
@@ -8,12 +9,16 @@ export function GameCard({ game, lang }: Props) {
   const ui = UI[lang];
   const labels = ui.gamesPage;
   const titleId = `game-${game.id}-title`;
+  const isInOtherLanguage = lang !== GAME_LANGUAGE;
 
   return (
     <article className={game.available ? "path-card" : "path-card unavailable"} aria-labelledby={titleId}>
-      <span className="pixel-badge">{game.languages}</span>
+      <div className="badges">
+        <span className="pixel-badge">{game.languages}</span>
+        {isInOtherLanguage && <span className="pixel-badge outline">{labels.gameLanguage}</span>}
+      </div>
       {/* The games themselves are in Norwegian, so the titles are too. */}
-      <h3 id={titleId} lang="nb">{game.title}</h3>
+      <h3 id={titleId} lang={GAME_LANGUAGE}>{game.title}</h3>
       <p>{game.description}</p>
       <dl className="game-facts">
         <div><dt>{labels.languages}</dt><dd>{game.languages}</dd></div>

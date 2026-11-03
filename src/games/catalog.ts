@@ -1,4 +1,7 @@
-import type { Difficulty, Game, GameCard, GameId, GameText } from "../types";
+import type { Difficulty, Game, GameCard, GameId, GameText, Lang } from "../types";
+
+/** The games themselves are written in Norwegian, whatever the language of the page. */
+export const GAME_LANGUAGE: Lang = "nb";
 
 /** The scale for how demanding a game is, shown as dots on the games page. */
 export const DIFFICULTY_LEVELS: readonly Difficulty[] = [1, 2, 3];

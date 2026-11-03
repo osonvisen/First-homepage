@@ -13,7 +13,7 @@ Sizes are rough: **S** is one small step, **M** a few steps, **L** needs to be s
 ## 2. Fixed colours on the game cards (S)
 
 - **What:** `#c9cbe0` (soft text) and `#ffd34d` (accent) are written out in several rules instead of being colour tokens like `--game-bg` and `--game-text`. `#1b1d2a` in `.pixel-badge` belongs with them.
-- **Where:** `src/styles.css › .game-card p`, `.pixel-badge`, `.play-now`, `.path-card :focus-visible`, `.game-facts dt`, `.difficulty`, `.coming-soon`.
+- **Where:** `src/styles.css › .game-card p`, `.pixel-badge`, `.pixel-badge.outline`, `.play-now`, `.path-card :focus-visible`, `.game-facts dt`, `.difficulty`, `.coming-soon`.
 - **Rule:** No magic values. Colours are defined once as tokens on `:root`, so light and dark mode stay in one place.
 
 ## 3. No visual mark for the current page in the menu (S)

@@ -3,6 +3,7 @@
 import type { Difficulty, Link, PageData, StackGroup } from "../src/types.ts";
 import { PAGE_PATHS, pagePath, type PageKind, type Route } from "../src/routes.ts";
 import { UI } from "../src/i18n.ts";
+import { GAME_LANGUAGE } from "../src/games/catalog.ts";
 
 export const SITE = "https://orjans.no";
 
@@ -25,9 +26,6 @@ function personJsonLd({ lang, shared, text }: PageData) {
     alumniOf: { "@type": "EducationalOrganization", name: "Gokstad Akademiet" },
   };
 }
-
-// The games themselves are written in Norwegian, whatever the language of the page.
-const GAME_LANGUAGE = "nb";
 
 // How demanding a game is (1–3), in the words schema.org consumers expect for educationalLevel.
 const EDUCATIONAL_LEVELS: Record<Difficulty, string> = { 1: "Beginner", 2: "Intermediate", 3: "Advanced" };
