@@ -9,6 +9,8 @@ import type { Experience, Link, PageData, Project, StackGroup } from "../src/typ
 import { ROUTES, pagePath, type Route } from "../src/routes.ts";
 import { SITE, buildHead } from "./head.ts";
 import { buildSitemap } from "./sitemap.ts";
+import { gamesMarkdown } from "./gamesMarkdown.ts";
+import { UI } from "../src/i18n.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");
@@ -109,6 +111,8 @@ ${emailText ? `- Email: ${emailText}\n` : ""}- GitHub: ${linkTo("github") ?? ""}
 ## Selected projects
 ${projectsMd(en)}
 
+${gamesMarkdown(en)}
+
 ## Experience and education
 ${experienceMd(en)}
 
@@ -123,6 +127,8 @@ ${blocks(en.text.beforeCode)}
 ## More
 - [Profile page (English)](${SITE}/en/)
 - [Profilside (norsk)](${SITE}/)
+- [SQL and Python games (English overview)](${SITE}${pagePath({ page: "games", lang: "en" })})
+- [SQL- og Python-spill (norsk)](${SITE}${pagePath({ page: "games", lang: "nb" })})
 - [Structured profile (JSON Resume)](${SITE}/profile.json)
 
 ---
@@ -130,6 +136,7 @@ ${blocks(en.text.beforeCode)}
 ## Norsk sammendrag
 ${shared.name}, ${nb.text.role.toLowerCase()} i ${shared.location ?? "Norge"}. ${nb.text.roleDetail ?? ""}. ${shared.openToWork ? `${nb.text.status}.` : ""}
 ${nb.text.lookingFor ?? ""} Kontakt helst via LinkedIn${emailText ? `, eller e-post: ${emailText}` : ""}.
+${UI.nb.gamesPage.documentTitle} for studenter og andre: ${SITE}${pagePath({ page: "games", lang: "nb" })}
 `;
 writeFileSync(join(DIST, "llms.txt"), llms.replace(/\n{3,}/g, "\n\n"));
 

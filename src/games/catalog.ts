@@ -1,4 +1,7 @@
-import type { Game, GameCard, GameId, GameText } from "../types";
+import type { Difficulty, Game, GameCard, GameId, GameText } from "../types";
+
+/** The scale for how demanding a game is, shown as dots on the games page. */
+export const DIFFICULTY_LEVELS: readonly Difficulty[] = [1, 2, 3];
 
 /** Games are published in public/<id>/ and served from /<id>/. */
 export const gameUrl = (id: GameId) => `/${id}/`;

@@ -6,8 +6,9 @@ import { parse } from "yaml";
 import shared from "../src/content/shared.json";
 import nb from "../src/content/nb.json";
 import en from "../src/content/en.json";
+import { DIFFICULTY_LEVELS } from "../src/games/catalog.ts";
 
-const DIFFICULTIES: unknown[] = [1, 2, 3];
+const DIFFICULTIES: readonly unknown[] = DIFFICULTY_LEVELS;
 const LANGUAGES: unknown[] = ["SQL", "Python + SQL"];
 // Must be a valid folder name under public/, since the game is served from /<id>/.
 const FOLDER_NAME = /^[a-z0-9]+(-[a-z0-9]+)*$/;
