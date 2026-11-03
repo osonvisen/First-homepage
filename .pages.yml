@@ -25,6 +25,15 @@ content:
         fields:
           - { name: label, label: Tekst, type: string }
           - { name: url, label: Adresse, type: string }
+      - name: games
+        label: Spill (rekkefølgen her er anbefalt rekkefølge)
+        type: object
+        list: true
+        fields:
+          - { name: id, label: Id, type: string, required: true, description: "Samme som mappenavnet i public/, for eksempel fjordglimt. Legg også inn tekst for spillet under norsk og engelsk tekst." }
+          - { name: languages, label: Språk, type: select, options: { values: ["SQL", "Python + SQL"] } }
+          - { name: difficulty, label: Krevende (1–3), type: number, options: { min: 1, max: 3 } }
+          - { name: available, label: Klar til å spilles, type: boolean, description: "Av: vises som «Kommer snart», uten knapp." }
 
   - name: norwegian
     label: Norsk tekst
@@ -73,17 +82,26 @@ content:
         fields:
           - { name: group, label: Gruppe, type: string }
           - { name: tools, label: Verktøy, type: string }
-      - { name: gamesIntro, label: Spill – undertekst, type: string }
+      - { name: gamesIntro, label: Spill – undertekst på forsiden, type: string }
+      - { name: gamesPageIntro, label: Spillsiden – innledning, type: text }
+      - { name: progressNote, label: Spillsiden – om lagring av fremgang, type: text }
       - name: games
-        label: Spill
+        label: Spill – tekst
         type: object
         list: true
         fields:
+          - name: id
+            label: Spill
+            type: select
+            options:
+              values:
+                - { name: fjordglimt, label: Fjordglimt }
+                - { name: millionene, label: Millionene }
+                - { name: innbruddet, label: Innbruddet }
           - { name: title, label: Tittel, type: string }
-          - { name: description, label: Beskrivelse, type: text }
-          - { name: url, label: Lenke, type: string, description: "For spill på siden: /mappenavn/, for eksempel /fjordglimt/" }
-          - { name: status, label: Status, type: select, options: { values: [Klar, Prototype, Kommer snart] } }
+          - { name: description, label: Presentasjon, type: text, description: "To–tre setninger. Ikke røp noe om løsningen." }
           - { name: skills, label: Hva man øver på, type: string }
+          - { name: studyFit, label: Når det passer i studiet, type: string }
       - { name: contactTitle, label: Kontakt – tittel, type: string }
       - { name: contactText, label: Kontakt – tekst, type: text }
 

@@ -129,20 +129,29 @@
     }
   ],
   "gamesIntro": "For students and anyone curious about SQL (in Norwegian)",
+  "gamesPageIntro": "Optional games for anyone who wants to test their SQL and Python. I made them for the students at Gokstad Akademiet, but they are open to everyone. The games are in Norwegian. Play them in the order below, since each one builds a little on the one before.",
+  "progressNote": "Your progress is saved only in this browser on this computer. If you switch browser or computer, or clear your browsing data, you start over. Your progress is not sent anywhere.",
   "games": [
     {
+      "id": "fjordglimt",
       "title": "Mordet på Hotell Fjordglimt",
-      "description": "Solve a murder at a hotel in Horten by writing SQL against a database that runs right in the browser.",
-      "url": "/fjordglimt/",
-      "status": "Klar",
-      "skills": "WHERE · JOIN · LIKE · GROUP BY · subqueries"
+      "description": "A murder at Hotell Fjordglimt in Horten needs solving, and all you have to go on is a database. Ask the right questions in SQL and follow the leads wherever they go. The database runs right in the browser, so there is nothing to install.",
+      "skills": "WHERE · JOIN · LIKE · GROUP BY · subqueries",
+      "studyFit": "Once you have learned SELECT, WHERE and JOIN."
     },
     {
+      "id": "millionene",
       "title": "Millionene som forsvant",
-      "description": "Build the database yourself from raw data, and find out where 4.2 million kroner went.",
-      "url": "/millionene/",
-      "status": "Klar",
-      "skills": "CREATE TABLE · INSERT · normalisation · foreign keys"
+      "description": "4.2 million kroner are gone, and all there is to go on is messy raw data. Before you can investigate, you have to build the database yourself: create the tables, fill them and link them together. Only then can the search begin.",
+      "skills": "CREATE TABLE · INSERT · normalisation · foreign keys",
+      "studyFit": "Once you have learned to create tables, normalisation and foreign keys."
+    },
+    {
+      "id": "innbruddet",
+      "title": "Innbruddet",
+      "description": "The entire member list of a climbing centre in Tønsberg has turned up on a forum, and nobody there shared it. You get access to the database and work in Python to find out what happened, and to make sure it cannot happen again.",
+      "skills": "Python with MySQL · cursor and fetchall · parameters · error handling",
+      "studyFit": "After session 10 of Python + SQL. Part 2 fits after the Flask session."
     }
   ],
   "contactTitle": "Shall we talk?",

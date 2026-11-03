@@ -1,6 +1,7 @@
 import shared from "./content/shared.json";
 import nb from "./content/nb.json";
 import en from "./content/en.json";
+import { gameCards } from "./games/catalog";
 import type { Lang, PageData, Shared, Text } from "./types";
 
 // The portrait is resized at build time (scripts/prerender.ts) into these files.
@@ -13,5 +14,6 @@ export function portraitSrc(s: Shared) {
 
 export function pageData(lang: Lang): PageData {
   const s = shared as Shared;
-  return { lang, shared: s, text: (lang === "en" ? en : nb) as Text, portrait: portraitSrc(s) };
+  const text = (lang === "en" ? en : nb) as Text;
+  return { lang, shared: s, text, portrait: portraitSrc(s), games: gameCards(s.games ?? [], text.games ?? []) };
 }

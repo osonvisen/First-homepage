@@ -1,4 +1,4 @@
-// Runs after `vite build`. Renders static HTML for / and /en/ so search engines and
+// Runs after `vite build`. Renders static HTML for every page in src/routes.ts so search engines and
 // AI agents see the full content without running JavaScript. Also generates agent files
 // (llms.txt, profile.json, sitemap.xml) and resized portraits from the content in src/content.
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from "node:fs";
@@ -6,10 +6,14 @@ import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import sharp from "sharp";
 import type { Experience, Link, PageData, Project, StackGroup } from "../src/types.ts";
+import { ROUTES, pagePath, type Route } from "../src/routes.ts";
+import { SITE, buildHead } from "./head.ts";
+import { buildSitemap } from "./sitemap.ts";
+import { gamesMarkdown } from "./gamesMarkdown.ts";
+import { UI } from "../src/i18n.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");
-const SITE = "https://orjans.no";
 // Same line as in index.html. Loads Google Analytics after consent (see public/analytics.js).
 const ANALYTICS_TAG = '<script src="/analytics.js" defer></script>';
 
@@ -19,7 +23,6 @@ const template = readFileSync(join(DIST, "index.html"), "utf8");
 const nb: PageData = pageData("nb");
 const en: PageData = pageData("en");
 const shared = nb.shared;
-const escapeHtml = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const linkTo = (name: string) => (shared.links ?? []).find((l: Link) => l.label.toLowerCase().includes(name))?.url;
 // Written out so language models understand it, but simple scrapers looking for "name@domain" do not.
 const emailText = shared.emailUser && shared.emailDomain
@@ -42,62 +45,28 @@ if (shared.image) {
   }
 }
 
-// ---------- Structured data (schema.org) ----------
-function jsonLd(page: PageData) {
-  const t = page.text;
-  return {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: shared.name,
-    url: page.lang === "en" ? `${SITE}/en/` : `${SITE}/`,
-    image: shared.image ? `${SITE}/media/portrait-720.webp` : undefined,
-    jobTitle: t.role,
-    description: t.intro,
-    address: shared.location ? { "@type": "PostalAddress", addressLocality: shared.location, addressCountry: "NO" } : undefined,
-    sameAs: (shared.links ?? []).map((l: Link) => l.url),
-    knowsAbout: (t.stack ?? []).flatMap((s: StackGroup) => s.tools.split(/,| og | and /).map((x) => x.trim()).filter(Boolean)),
-    knowsLanguage: ["nb", "en"],
-    alumniOf: { "@type": "EducationalOrganization", name: "Gokstad Akademiet" },
-  };
-}
-
-// ---------- HTML per language ----------
-function renderPage(page: PageData) {
-  const t = page.text;
-  const url = page.lang === "en" ? `${SITE}/en/` : `${SITE}/`;
-  const title = `${shared.name} – ${t.role} (C#/.NET)`;
-  const head = [
-    `<title>${escapeHtml(title)}</title>`,
-    `<meta name="description" content="${escapeHtml(t.intro ?? "")}" />`,
-    `<link rel="canonical" href="${url}" />`,
-    `<link rel="alternate" hreflang="nb" href="${SITE}/" />`,
-    `<link rel="alternate" hreflang="en" href="${SITE}/en/" />`,
-    `<link rel="alternate" hreflang="x-default" href="${SITE}/" />`,
-    `<meta property="og:type" content="profile" />`,
-    `<meta property="og:title" content="${escapeHtml(title)}" />`,
-    `<meta property="og:description" content="${escapeHtml(t.intro ?? "")}" />`,
-    `<meta property="og:url" content="${url}" />`,
-    `<meta property="og:image" content="${SITE}/og.png" />`,
-    `<meta property="og:locale" content="${page.lang === "en" ? "en_GB" : "nb_NO"}" />`,
-    `<meta name="twitter:card" content="summary_large_image" />`,
-    `<script type="application/ld+json">${JSON.stringify(jsonLd(page)).replace(/</g, "\\u003c")}</script>`,
-  ].join("\n    ");
+// ---------- HTML per page and language ----------
+function renderPage(route: Route) {
+  const page: PageData = pageData(route.lang);
   return template
     .replace('<html lang="nb">', `<html lang="${page.lang}">`)
-    .replace("<!--head-->", head)
-    .replace("<!--app-->", render(page.lang));
+    .replace("<!--head-->", buildHead(route, page))
+    .replace("<!--app-->", render(route));
 }
 
-writeFileSync(join(DIST, "index.html"), renderPage(nb));
-mkdirSync(join(DIST, "en"), { recursive: true });
-writeFileSync(join(DIST, "en", "index.html"), renderPage(en));
+for (const route of ROUTES) {
+  const file = join(DIST, pagePath(route), "index.html");
+  mkdirSync(dirname(file), { recursive: true });
+  writeFileSync(file, renderPage(route));
+}
 
 // ---------- Analytics on game pages ----------
 // The games are built in the sql-games repo and copied into public/. Adding the tag here at build time
 // means every game gets analytics without the game build having to know about it.
-const LANGUAGE_FOLDERS = ["en"];
+// The top-level folders of the site's own pages ("en", "spill") are not games.
+const PAGE_FOLDERS = new Set(ROUTES.map((route) => pagePath(route).split("/")[1]).filter(Boolean));
 const gameFolders = readdirSync(DIST, { withFileTypes: true })
-  .filter((entry) => entry.isDirectory() && !LANGUAGE_FOLDERS.includes(entry.name))
+  .filter((entry) => entry.isDirectory() && !PAGE_FOLDERS.has(entry.name))
   .map((entry) => entry.name)
   .filter((name) => existsSync(join(DIST, name, "index.html")));
 for (const folder of gameFolders) {
@@ -142,6 +111,8 @@ ${emailText ? `- Email: ${emailText}\n` : ""}- GitHub: ${linkTo("github") ?? ""}
 ## Selected projects
 ${projectsMd(en)}
 
+${gamesMarkdown(en)}
+
 ## Experience and education
 ${experienceMd(en)}
 
@@ -154,8 +125,10 @@ ${blocks(en.text.about)}
 ${blocks(en.text.beforeCode)}
 
 ## More
-- [Profile page (English)](${SITE}/en/)
-- [Profilside (norsk)](${SITE}/)
+- [Profile page (English)](${SITE}${pagePath({ page: "home", lang: "en" })})
+- [Profilside (norsk)](${SITE}${pagePath({ page: "home", lang: "nb" })})
+- [SQL and Python games (English overview)](${SITE}${pagePath({ page: "games", lang: "en" })})
+- [SQL- og Python-spill (norsk)](${SITE}${pagePath({ page: "games", lang: "nb" })})
 - [Structured profile (JSON Resume)](${SITE}/profile.json)
 
 ---
@@ -163,6 +136,7 @@ ${blocks(en.text.beforeCode)}
 ## Norsk sammendrag
 ${shared.name}, ${nb.text.role.toLowerCase()} i ${shared.location ?? "Norge"}. ${nb.text.roleDetail ?? ""}. ${shared.openToWork ? `${nb.text.status}.` : ""}
 ${nb.text.lookingFor ?? ""} Kontakt helst via LinkedIn${emailText ? `, eller e-post: ${emailText}` : ""}.
+${UI.nb.gamesPage.documentTitle} for studenter og andre: ${SITE}${pagePath({ page: "games", lang: "nb" })}
 `;
 writeFileSync(join(DIST, "llms.txt"), llms.replace(/\n{3,}/g, "\n\n"));
 
@@ -174,7 +148,7 @@ const profile = {
     name: shared.name,
     label: `${en.text.role} (C#/.NET)`,
     image: shared.image ? `${SITE}/media/portrait-720.webp` : undefined,
-    url: `${SITE}/en/`,
+    url: `${SITE}${pagePath({ page: "home", lang: "en" })}`,
     summary: [en.text.intro, en.text.lookingFor].filter(Boolean).join(" "),
     location: { city: shared.location, countryCode: "NO" },
     profiles: (shared.links ?? []).map((l: Link) => ({ network: l.label, url: l.url })),
@@ -199,21 +173,6 @@ const profile = {
 writeFileSync(join(DIST, "profile.json"), JSON.stringify(profile, null, 2));
 
 // ---------- sitemap.xml ----------
-const today = new Date().toISOString().slice(0, 10);
-const pageEntry = (path: string) => `  <url><loc>${SITE}${path}</loc><lastmod>${today}</lastmod>
-    <xhtml:link rel="alternate" hreflang="nb" href="${SITE}/" />
-    <xhtml:link rel="alternate" hreflang="en" href="${SITE}/en/" />
-  </url>`;
-writeFileSync(
-  join(DIST, "sitemap.xml"),
-  `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${pageEntry("/")}
-${pageEntry("/en/")}
-  <url><loc>${SITE}/fjordglimt/</loc></url>
-  <url><loc>${SITE}/millionene/</loc></url>
-</urlset>
-`
-);
+writeFileSync(join(DIST, "sitemap.xml"), buildSitemap(shared.games ?? [], new Date().toISOString().slice(0, 10)));
 
-console.log(`Done: index.html, en/index.html, llms.txt, profile.json, sitemap.xml${shared.image ? ", portraits" : ""}`);
+console.log(`Done: ${ROUTES.map(pagePath).join(", ")}, llms.txt, profile.json, sitemap.xml${shared.image ? ", portraits" : ""}`);
