@@ -1,7 +1,7 @@
 import shared from "./content/shared.json";
 import nb from "./content/nb.json";
 import en from "./content/en.json";
-import { gameCards } from "./games/catalog.ts";
+import { gameCards } from "./games/catalog";
 import type { Lang, PageData, Shared, Text } from "./types";
 
 // The portrait is resized at build time (scripts/prerender.ts) into these files.

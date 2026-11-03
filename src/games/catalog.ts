@@ -1,4 +1,4 @@
-import type { Game, GameCard, GameText } from "../types.ts";
+import type { Game, GameCard, GameText } from "../types";
 
 /**
  * Joins the shared facts about each game with its text in one language, in the recommended order.

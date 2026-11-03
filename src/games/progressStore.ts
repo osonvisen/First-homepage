@@ -1,4 +1,4 @@
-import { parseProgress, type GameProgress } from "./progress.ts";
+import { parseProgress, type GameProgress } from "./progress";
 
 /**
  * Where the site reads how far a visitor has come in each game. Today that is the browser;
