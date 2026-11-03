@@ -20,6 +20,16 @@ describe("SiteHeader", () => {
     expect(languageLink(renderToString(<SiteHeader lang="nb" page="games" />))).toBe("/en/games/");
   });
 
+  it("links «Spill» in the menu to the games page in the same language", () => {
+    expect(renderToString(<SiteHeader lang="nb" page="home" />)).toMatch(/<a href="\/spill\/"[^>]*>Spill<\/a>/);
+    expect(renderToString(<SiteHeader lang="en" page="home" />)).toMatch(/<a href="\/en\/games\/"[^>]*>Games<\/a>/);
+  });
+
+  it("marks the games link as the current page only on the games page", () => {
+    expect(renderToString(<SiteHeader lang="nb" page="games" />)).toContain('<a href="/spill/" aria-current="page">');
+    expect(renderToString(<SiteHeader lang="nb" page="home" />)).not.toContain("aria-current");
+  });
+
   it("switches language between the front pages", () => {
     expect(languageLink(renderToString(<SiteHeader lang="nb" page="home" />))).toBe("/en/");
     expect(languageLink(renderToString(<SiteHeader lang="en" page="home" />))).toBe("/");

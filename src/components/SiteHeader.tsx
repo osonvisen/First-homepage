@@ -9,6 +9,7 @@ interface Props { lang: Lang; page: PageKind }
 export function SiteHeader({ lang, page }: Props) {
   const ui = UI[lang];
   const home = pagePath({ page: "home", lang });
+  const gamesPage = pagePath({ page: "games", lang });
   const other = ui.otherLang;
   return (
     <>
@@ -24,7 +25,7 @@ export function SiteHeader({ lang, page }: Props) {
               <li><a href={`${home}#projects`}>{ui.nav.projects}</a></li>
               <li><a href={`${home}#experience`}>{ui.nav.experience}</a></li>
               <li><a href={`${home}#about`}>{ui.nav.about}</a></li>
-              <li><a href={`${home}#games`}>{ui.nav.games}</a></li>
+              <li><a href={gamesPage} aria-current={page === "games" ? "page" : undefined}>{ui.nav.games}</a></li>
               <li><a href={`${home}#contact`}>{ui.nav.contact}</a></li>
             </ul>
           </nav>

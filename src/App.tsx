@@ -4,6 +4,7 @@ import { Logo } from "./components/Logo";
 import { EmailReveal } from "./components/EmailReveal";
 import { SiteHeader } from "./components/SiteHeader";
 import { SiteFooter } from "./components/SiteFooter";
+import { pagePath } from "./routes";
 
 const isExternal = (url: string) => /^https?:\/\//.test(url);
 const externalProps = (url: string) => (isExternal(url) ? { target: "_blank", rel: "noopener" } : {});
@@ -40,7 +41,7 @@ export default function App({ lang, shared, text, portrait, games }: PageData) {
             {text.intro && <p className="intro">{text.intro}</p>}
             <div className="actions">
               <a className="button filled" href="#projects">{ui.seeProjects}</a>
-              <a className="button outline" href="#games">{ui.playGames}</a>
+              <a className="button outline" href={pagePath({ page: "games", lang })}>{ui.playGames}</a>
             </div>
           </div>
         </section>
@@ -131,13 +132,15 @@ export default function App({ lang, shared, text, portrait, games }: PageData) {
                   <a className="game-card" href={g.url}>
                     <span className="pixel-badge">{g.languages}</span>
                     <h3 lang="nb">{g.title}</h3>
-                    <p>{g.description}</p>
                     <p className="skills">{g.skills}</p>
                     <span className="play-now">{ui.playNow} →</span>
                   </a>
                 </li>
               ))}
             </ul>
+            <div className="actions">
+              <a className="button outline" href={pagePath({ page: "games", lang })}>{ui.seeAllGames} →</a>
+            </div>
           </section>
         )}
 
