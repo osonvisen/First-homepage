@@ -39,6 +39,7 @@ export const UI = {
       studyFit: "Når i studiet",
       comingSoon: "Kommer snart",
       gameLanguage: "På norsk",
+      progress: { heading: "Fremgang", notStarted: "Ikke startet", started: "Påbegynt", solved: "Løst" },
     },
   },
   en: {
@@ -78,6 +79,7 @@ export const UI = {
       studyFit: "When in your studies",
       comingSoon: "Coming soon",
       gameLanguage: "In Norwegian",
+      progress: { heading: "Progress", notStarted: "Not started", started: "In progress", solved: "Solved" },
     },
   },
 } satisfies Record<Lang, unknown>;

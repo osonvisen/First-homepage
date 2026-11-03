@@ -1,11 +1,12 @@
 import { parseProgress, type GameProgress } from "./progress";
+import type { GameId } from "../types";
 
 /**
  * Where the site reads how far a visitor has come in each game. Today that is the browser;
  * the async signature lets a server-backed store replace it without changing the callers.
  */
 export interface ProgressStore {
-  read(gameId: string): Promise<GameProgress>;
+  read(gameId: GameId): Promise<GameProgress>;
 }
 
 // Written by the games, see sql-games/docs/progress-record.md. The site only reads it.
