@@ -11,7 +11,7 @@
 (function () {
   "use strict";
 
-  const MEASUREMENT_ID = "G-H9TY576PB9";
+  const MEASUREMENT_ID = "G-1JS7QHWQMY";
   const PRODUCTION_HOSTS = ["orjans.no", "www.orjans.no"];
   const STORAGE_KEY = "analytics-consent";
   const CONSENT = { granted: "granted", denied: "denied" };

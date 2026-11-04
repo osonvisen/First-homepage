@@ -38,7 +38,7 @@ npx vite preview  # serve the production build locally
 
 ## Analytics and cookie consent
 
-Google Analytics (`G-H9TY576PB9`) is handled by `public/analytics.js`, included with one line in `<head>`:
+Google Analytics (`G-1JS7QHWQMY`) is handled by `public/analytics.js`, included with one line in `<head>`:
 
 ```html
 <script src="/analytics.js" defer></script>
