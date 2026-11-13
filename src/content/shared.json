@@ -32,7 +32,7 @@
       "id": "innbruddet",
       "languages": "Python + SQL",
       "difficulty": 3,
-      "available": false
+      "available": true
     }
   ]
 }
