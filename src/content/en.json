@@ -150,7 +150,7 @@
       "id": "innbruddet",
       "title": "Innbruddet",
       "description": "The entire member list of a climbing centre in Tønsberg has turned up on a forum, and nobody there shared it. You get access to the database and work in Python to find out what happened, and to make sure it cannot happen again.",
-      "skills": "Python with MySQL · cursor and fetchall · parameters · error handling",
+      "skills": "Python and SQL with mysql.connector · cursor and fetchall · parameters · error handling",
       "studyFit": "After session 10 of Python + SQL. Part 2 fits after the Flask session."
     }
   ],
