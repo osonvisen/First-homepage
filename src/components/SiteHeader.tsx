@@ -1,6 +1,8 @@
+import { useEffect, useRef } from "react";
 import { UI } from "../i18n";
 import { pagePath, type PageKind } from "../routes";
 import type { Lang } from "../types";
+import { trackHeaderHeight } from "./headerHeight";
 import { Logo } from "./Logo";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -11,10 +13,12 @@ export function SiteHeader({ lang, page }: Props) {
   const home = pagePath({ page: "home", lang });
   const gamesPage = pagePath({ page: "games", lang });
   const other = ui.otherLang;
+  const headerRef = useRef<HTMLElement>(null);
+  useEffect(() => (headerRef.current ? trackHeaderHeight(headerRef.current) : undefined), []);
   return (
     <>
       <a className="skip-link" href="#content">{ui.skipLink}</a>
-      <header className="site-header">
+      <header className="site-header" ref={headerRef}>
         <div className="container header-inner">
           <a className="brand" href={home}>
             <Logo className="brand-logo" />

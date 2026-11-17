@@ -54,7 +54,11 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+/* Keeps anchor targets and focused elements clear of the sticky header (WCAG 2.4.11). --header-height
+   is measured by SiteHeader; the fallback covers the first scroll before the script has run. */
+html { --header-height: 66px; scroll-padding-top: calc(var(--header-height) + 16px); scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (max-width: 860px) { html { --header-height: 144px; } }
+@media (max-width: 360px) { html { --header-height: 194px; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
 body {
   margin: 0;
