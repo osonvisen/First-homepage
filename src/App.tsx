@@ -42,8 +42,8 @@ export default function App({ lang, shared, text, portrait, games }: PageData) {
             <p className="role">{text.role}{text.roleDetail && <span> · {text.roleDetail}</span>}</p>
             {text.intro && <p className="intro">{text.intro}</p>}
             <div className="actions">
-              {cvPath && <a className="button outline" href={cvPath} download>{ui.downloadCv}</a>}
-              <a className="button filled" href="#projects">{ui.seeProjects}</a>
+              {cvPath && <a className="button filled" href={cvPath} download>{ui.downloadCv}</a>}
+              <a className={cvPath ? "button outline" : "button filled"} href="#projects">{ui.seeProjects}</a>
               <a className="button outline" href={pagePath({ page: "games", lang })}>{ui.playGames}</a>
             </div>
           </div>

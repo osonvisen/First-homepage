@@ -50,8 +50,13 @@ describe("App games section", () => {
 describe("App hero", () => {
   it("offers the CV before the other buttons in Norwegian", () => {
     expect(render("nb")).toMatch(
-      /<div class="actions"><a class="button outline" href="\/downloads\/CV_Orjan_Sonvisen_no\.pdf" download="">Last ned CV \(PDF\)<\/a>/,
+      /<div class="actions"><a class="button filled" href="\/downloads\/CV_Orjan_Sonvisen_no\.pdf" download="">Last ned CV \(PDF\)<\/a>/,
     );
+  });
+
+  it("highlights the projects button only when there is no CV", () => {
+    expect(render("nb")).toContain('<a class="button outline" href="#projects">');
+    expect(render("en")).toContain('<a class="button filled" href="#projects">');
   });
 
   it("has no CV button in English, which has no CV yet", () => {
