@@ -1,4 +1,4 @@
-import type { Lang } from "./types";
+import type { Lang } from "./types.ts";
 
 /**
  * The files are in public/downloads. Keep the names when a CV is replaced, so old links still work.

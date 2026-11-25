@@ -48,6 +48,16 @@ describe("App games section", () => {
 });
 
 describe("App hero", () => {
+  it("offers the CV before the other buttons in Norwegian", () => {
+    expect(render("nb")).toMatch(
+      /<div class="actions"><a class="button outline" href="\/downloads\/CV_Orjan_Sonvisen_no\.pdf" download="">Last ned CV \(PDF\)<\/a>/,
+    );
+  });
+
+  it("has no CV button in English, which has no CV yet", () => {
+    expect(render("en")).not.toContain("Download CV");
+  });
+
   it("sends «Prøv spillene» to the games page", () => {
     expect(render("nb")).toMatch(/<a class="button outline" href="\/spill\/">Prøv spillene<\/a>/);
     expect(render("en")).toMatch(/<a class="button outline" href="\/en\/games\/">Try the games<\/a>/);

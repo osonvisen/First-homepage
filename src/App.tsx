@@ -5,6 +5,7 @@ import { EmailReveal } from "./components/EmailReveal";
 import { SiteHeader } from "./components/SiteHeader";
 import { SiteFooter } from "./components/SiteFooter";
 import { pagePath } from "./routes";
+import { CV_PATHS } from "./cv.ts";
 
 const isExternal = (url: string) => /^https?:\/\//.test(url);
 const externalProps = (url: string) => (isExternal(url) ? { target: "_blank", rel: "noopener" } : {});
@@ -18,6 +19,7 @@ function shortHash(s: string) {
 
 export default function App({ lang, shared, text, portrait, games }: PageData) {
   const ui = UI[lang];
+  const cvPath = CV_PATHS[lang];
   const [firstName, ...rest] = shared.name.split(" ");
   const lastName = rest.join(" ");
 
@@ -40,6 +42,7 @@ export default function App({ lang, shared, text, portrait, games }: PageData) {
             <p className="role">{text.role}{text.roleDetail && <span> · {text.roleDetail}</span>}</p>
             {text.intro && <p className="intro">{text.intro}</p>}
             <div className="actions">
+              {cvPath && <a className="button outline" href={cvPath} download>{ui.downloadCv}</a>}
               <a className="button filled" href="#projects">{ui.seeProjects}</a>
               <a className="button outline" href={pagePath({ page: "games", lang })}>{ui.playGames}</a>
             </div>
